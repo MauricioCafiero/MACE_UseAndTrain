@@ -45,10 +45,31 @@ from ase import Atoms
 log = logging.getLogger("finetune_mace")
 
 
+# Ground-state atomic term multiplicities for the common organic elements
+# (neutral atoms). Used as the default spin state when computing isolated-atom
+# GFN2 energies; override or extend per element via the ``multiplicity`` arg of
+# :func:`compute_e0s_gfn2`.
+_ATOMIC_MULTIPLICITIES: dict[str, int] = {
+    "H": 2,   # 2S
+    "B": 2,   # 2P
+    "C": 3,   # 3P
+    "N": 4,   # 4S
+    "O": 3,   # 3P
+    "F": 2,   # 2P
+    "Si": 3,  # 3P
+    "P": 4,   # 4S
+    "S": 3,   # 3P
+    "Cl": 2,  # 2P
+    "Br": 2,  # 2P
+    "I": 2,   # 2P
+}
+
+
 def compute_e0s_gfn2(
     elements: Sequence[Union[int, str]],
     method: str = "GFN2-xTB",
     box_A: float = 12.0,
+    multiplicity: Optional[dict[Union[int, str], int]] = None,
     **calc_kw,
 ) -> dict[int, float]:
     """Compute isolated-atom GFN2 energies for the given elements.
@@ -57,12 +78,43 @@ def compute_e0s_gfn2(
     single-point energy is recorded. Returns a mapping ``Z -> energy (eV)``
     suitable for ``mace_run_train --E0s='{...}'``.
 
+    Spin handling: the energy of an isolated atom depends on its electronic
+    ground state, so the correct multiplicity must be set. ``multiplicity`` is
+    an optional ``{element: mult}`` mapping (keys may be element symbols or
+    atomic numbers) that overrides or extends the built-in table of ground-state
+    multiplicities for the common organic elements (H, B, C, N, O, F, Si, P, S,
+    Cl, Br, I). For any element not covered, the electron-parity heuristic
+    (doublet for odd Z, singlet for even Z) is used with a warning -- this is
+    often wrong, so pass an explicit ``multiplicity`` entry for unusual
+    elements.
+
     This is optional; ``--E0s=average`` (the default in :func:`build_train_command`)
     is simpler and usually fine for fine-tuning. Use this when you want a
     physically meaningful atomic-energy baseline.
     """
     from ase import Atom
     from gfn2_data import get_gfn2_calculator
+
+    mult_overrides = multiplicity or {}
+
+    def _mult_for(symbol: str, z: int) -> int:
+        # User overrides (by symbol or Z) take precedence.
+        if symbol in mult_overrides:
+            return int(mult_overrides[symbol])
+        if z in mult_overrides:
+            return int(mult_overrides[z])
+        # Built-in ground-state table for the common organic elements.
+        if symbol in _ATOMIC_MULTIPLICITIES:
+            return _ATOMIC_MULTIPLICITIES[symbol]
+        # Last resort: parity heuristic (often wrong -- warn so it's not silent).
+        fallback = 2 if z % 2 == 1 else 1
+        log.warning(
+            "No ground-state multiplicity known for %s (Z=%d); falling back to "
+            "the parity heuristic (mult=%d), which is often wrong. Pass "
+            "multiplicity={'%s': <mult>} to set it explicitly.",
+            symbol, z, fallback, symbol,
+        )
+        return fallback
 
     e0s: dict[int, float] = {}
     for el in elements:
@@ -71,14 +123,110 @@ def compute_e0s_gfn2(
         at = Atoms([atom], positions=[[0.0, 0.0, 0.0]])
         at.cell = [box_A, box_A, box_A]
         at.pbc = False
-        # isolated atoms: set spin via multiplicity for open-shell atoms
-        # (rough defaults; refine as needed for your system)
-        mult = 2 if z % 2 == 1 else 1
+        mult = _mult_for(atom.symbol, z)
         at.calc = get_gfn2_calculator(method=method, multiplicity=mult, **calc_kw)
         e = float(at.get_potential_energy())
         e0s[z] = e
         log.info("E0[%s (Z=%d)] = %.6f eV (mult=%d)", atom.symbol, z, e, mult)
     return e0s
+
+
+def elements_in_file(
+    path: Union[str, Path],
+    *,
+    max_frames: Optional[int] = None,
+    stable_frames: Optional[int] = None,
+) -> list[str]:
+    """Return the sorted unique element symbols present in an extxyz file.
+
+    Frames are streamed lazily via :func:`ase.io.iread`, so memory stays low
+    regardless of file size (a 4-5k-frame file is fine). By default every frame
+    is read for a complete element set. To sample a large file instead, pass:
+
+    * ``max_frames`` -- stop after reading this many frames.
+    * ``stable_frames`` -- stop after this many consecutive frames add no new
+      element (early stop once the element set has converged).
+
+    Sampling trades completeness for speed: a rare element appearing only late
+    in the file can be missed, so the scanned frame count is logged (and a
+    warning is emitted) when sampling is active.
+    """
+    from ase.io import iread
+
+    symbols: set[str] = set()
+    since_new = 0
+    n = 0
+    stopped_early = False
+    it = iread(str(path), format="extxyz")
+    for a in it:
+        before = len(symbols)
+        symbols.update(a.get_chemical_symbols())
+        n += 1
+        since_new = 0 if len(symbols) > before else since_new + 1
+        if (max_frames is not None and n >= max_frames) or (
+            stable_frames is not None and since_new >= stable_frames
+        ):
+            # We hit a cap. Peek the next frame to tell a genuine early stop
+            # (more frames remain) from having read the whole file. If one more
+            # frame exists, fold its elements in too.
+            try:
+                nxt = next(it)
+                stopped_early = True
+                symbols.update(nxt.get_chemical_symbols())
+            except StopIteration:
+                pass
+            break
+    log.info("elements_in_file(%s): scanned %d frame(s)%s -> %s",
+             path, n, " (sampled)" if stopped_early else "", sorted(symbols))
+    if stopped_early:
+        log.warning(
+            "Element scan stopped after %d frame(s) of %s; a rare element "
+            "appearing only late could be missed. Drop max_frames/stable_frames "
+            "for a complete scan.", n, path,
+        )
+    return sorted(symbols)
+
+
+def auto_e0s_from_train(
+    train_file: Union[str, Path],
+    valid_file: Optional[Union[str, Path]] = None,
+    *,
+    multiplicity: Optional[dict[Union[int, str], int]] = None,
+    method: str = "GFN2-xTB",
+    box_A: float = 12.0,
+    max_frames: Optional[int] = None,
+    stable_frames: Optional[int] = None,
+    **calc_kw,
+) -> dict[int, float]:
+    """Auto-examine the training set and compute isolated-atom GFN2 E0s.
+
+    Scans the training (and, if given, validation) extxyz files, collects the
+    unique element symbols, and runs :func:`compute_e0s_gfn2` on exactly that
+    set. Returns the ``e0s`` dict (``Z -> energy (eV)``) ready to pass to
+    :func:`build_train_command` as ``e0s=`` -- or use ``e0s="auto"`` there to
+    call this implicitly.
+
+    ``multiplicity`` overrides/extends the built-in ground-state table for any
+    elements not covered (see :func:`compute_e0s_gfn2`).
+
+    ``max_frames`` / ``stable_frames`` are forwarded to :func:`elements_in_file`
+    to sample very large files instead of reading them in full. The default
+    streams all frames lazily, which already handles 4-5k-frame files in a few
+    seconds with low memory; only reach for sampling on much larger files.
+    """
+    files = [train_file] + ([valid_file] if valid_file else [])
+    symbols: set[str] = set()
+    for f in files:
+        symbols.update(elements_in_file(
+            f, max_frames=max_frames, stable_frames=stable_frames))
+    if not symbols:
+        raise RuntimeError(f"No atoms found in {files}")
+    elements = sorted(symbols)
+    log.info("Elements detected across training set: %s", elements)
+    return compute_e0s_gfn2(
+        elements, method=method, box_A=box_A,
+        multiplicity=multiplicity, **calc_kw,
+    )
 
 
 # alias -> filename that MACE writes into its download cache (~/.cache/mace).
@@ -132,6 +280,8 @@ def build_train_command(
     forces_key: str = "REF_forces",
     stress_key: Optional[str] = None,
     e0s: Union[str, dict[int, float]] = "average",
+    e0s_multiplicity: Optional[dict[Union[int, str], int]] = None,
+    e0s_box_A: float = 12.0,
     model: str = "MACE",
     name: str = "gfn2_finetune",
     results_dir: Union[str, Path] = "runs",
@@ -154,6 +304,15 @@ def build_train_command(
 
     Returns a list of CLI tokens. Pass it to :func:`run_finetune` or
     ``subprocess.run(cmd)``.
+
+    ``e0s`` selects the per-element reference-energy baseline:
+
+    * ``"average"`` (default) -- MACE fits per-element E0s from the data.
+    * ``"auto"`` -- scan ``train_file``/``valid_file`` for the elements present
+      and compute their isolated-atom GFN2 energies via
+      :func:`auto_e0s_from_train` (uses ``e0s_multiplicity`` / ``e0s_box_A``).
+    * a ``{Z: energy}`` dict -- passed through verbatim.
+
     """
     if checkpoints_dir is None:
         checkpoints_dir = results_dir
@@ -173,7 +332,15 @@ def build_train_command(
     foundation_model = str(foundation_model)
 
     e0s_arg: str
-    if isinstance(e0s, dict):
+    if e0s == "auto":
+        # Scan the training/validation files for the elements present and
+        # compute their isolated-atom GFN2 energies on the fly.
+        e0s_dict = auto_e0s_from_train(
+            train_file, valid_file,
+            multiplicity=e0s_multiplicity, box_A=e0s_box_A,
+        )
+        e0s_arg = json.dumps({str(k): v for k, v in sorted(e0s_dict.items())})
+    elif isinstance(e0s, dict):
         e0s_arg = json.dumps({str(k): v for k, v in sorted(e0s.items())})
     else:
         e0s_arg = str(e0s)

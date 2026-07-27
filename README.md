@@ -205,6 +205,23 @@ Notes on fine-tuning:
 * `--E0s=average` (default) derives per-element reference energies from the
   data. For a cleaner baseline, compute GFN2 isolated-atom energies with
   `ft.compute_e0s_gfn2(["H","C","N","O","F","S"])` and pass that dict as `e0s=`.
+  Ground-state multiplicities are built in for the common organic elements
+  (H, B, C, N, O, F, Si, P, S, Cl, Br, I); pass `multiplicity={"Fe": 5}` to
+  cover others (by symbol or atomic number).
+* To auto-detect the elements from the data itself, pass `e0s="auto"` (or call
+  `ft.auto_e0s_from_train(train_file, valid_file)`). It scans the training
+  extxyz, collects the unique elements, and computes their isolated-atom GFN2
+  energies in one step. Frames are streamed lazily, so 4-5k-frame files are
+  fine; for much larger files, sample with `max_frames=` / `stable_frames=` on
+  `auto_e0s_from_train` (a rare element appearing only late could then be
+  missed, so it warns):
+
+  ```python
+  ft.run_finetune(stats["train_file"], stats["valid_file"],
+                  foundation_model="off-medium", e0s="auto",
+                  e0s_multiplicity={"Fe": 5},  # only needed for non-standard elements
+                  results_dir="runs")
+  ```
 * `foundation_model="off-medium"` adapts the MACE-OFF23 medium checkpoint (an
   organic starting point). Use `"omol"` to adapt OMOL, or pass any `.model`
   path.
