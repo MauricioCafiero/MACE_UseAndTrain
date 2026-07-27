@@ -23,7 +23,10 @@ A `uv`-managed venv (Python 3.12 — the best-supported interpreter for the
 MACE/torch/e3nn stack) lives in `.venv/`.
 
 ```bash
-cd /Users/cafierom/python_mac/mace
+# clone the repo
+git clone https://github.com/MauricioCafiero/MACE_UseAndTrain.git
+cd MACE_UseAndTrain
+
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python mace-torch ase "tblite[ase]" matplotlib
 source .venv/bin/activate
