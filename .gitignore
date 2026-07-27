@@ -1,0 +1,64 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual env ---
+.venv/
+venv/
+env/
+
+# --- MACE downloaded models (large, auto-cached) ---
+# (MACE caches to ~/.cache/mace by default, but keep local copies out of git)
+*.model
+models/
+
+# --- Structures / trajectories / outputs ---
+*.xyz
+*.traj
+*.extxyz
+*.cif
+*.poscar
+*.gen
+*.pdb
+*.sdf
+*.mol2
+
+# --- Vibrations scratch files (ASE writes <name>.pckl, <name>.v) ---
+*.pckl
+*.v
+rosu_vib*
+water_vib*
+gfn2_vib*
+*_vib*
+
+# --- MACE training runs / checkpoints / logs ---
+runs/
+results/
+checkpoints/
+logs/
+*.log
+wandb/
+
+# --- Fine-tuned models / data artifacts ---
+gfn2_data*.xyz
+*_train.xyz
+*_valid.xyz
+smoke_*
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb
+
+# --- OS / editor ---
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
