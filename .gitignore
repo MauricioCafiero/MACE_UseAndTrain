@@ -46,11 +46,18 @@ logs/
 *.log
 wandb/
 
+# --- Activation/OOD visualization outputs (regenerable PNGs) ---
+figures/
+
 # --- Fine-tuned models / data artifacts ---
 gfn2_data*.xyz
 *_train.xyz
 *_valid.xyz
 smoke_*
+
+# --- OOD reference data (downloaded OFF23 test split + cached latent pool) ---
+# large: ~81 MB tarball + extracted extxyz + ~80 MB pool .npz
+data/
 
 # --- Jupyter ---
 .ipynb_checkpoints/
