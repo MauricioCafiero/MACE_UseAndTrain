@@ -20,6 +20,7 @@ path).
 
 | File | Purpose |
 |---|---|
+| `code/trust.py` | **The main entry point:** SMILES/XYZ → MACE single point → energy + OOD signal → TRUST/VERIFY verdict. See `OOD_NOTES.md`. |
 | `code/mace_calc.py` | MACE as an ASE calculator: single point, optimize, vibrations, MD. Autodetects OFF23 vs OMOL from the elements. |
 | `code/gfn2_data.py` | GFN2-xTB (TBLite/ASE): relax → MD + normal-mode sampling → extxyz with energy & forces. |
 | `code/finetune_mace.py` | Builds/launches `mace_run_train` to fine-tune a MACE foundation model on the GFN2 data. |
@@ -283,6 +284,36 @@ summarize(acts)
 The `interactions.*.conv_tp_weights` rows are indexed per atom-**pair** (the
 radial MLPs — the most chemically interpretable, "which bond-neurons fire");
 the `interactions.*.linear` and readout rows are per-**atom**.
+
+## Trust check: is this MACE energy reliable?
+
+`code/trust.py` is the one-command workflow for a new molecule: **SMILES or
+XYZ → MACE single point → energy + OOD signal → TRUST/VERIFY verdict.**
+
+```bash
+source .venv/bin/activate
+python code/trust.py "CC(=O)Nc1ccc(cc1)O"     # SMILES (RDKit embeds 3D)
+python code/trust.py molecule.xyz             # or an existing geometry
+python code/trust.py "CCO" --relax            # MACE-relax before scoring
+python code/trust.py mol.xyz --model off-medium
+```
+
+The OOD signal is the **latent distance** of the molecule to a reference pool
+built from MACE-OFF23's own training distribution (per-atom cosine distance of
+deep-layer activations, molecule-mean over atoms). The verdict rule:
+
+- **mean OOD ≤ 0.25 → TRUST**: in-distribution, where MACE-OFF matches
+  CCSD(T)/CBS to ~0.25 kcal/mol MAE on the S66 benchmark.
+- **mean OOD > 0.25 → VERIFY**: outside the calibration range. Not necessarily
+  wrong — but the error is no longer bounded by any benchmark, so cross-check
+  another model size or a higher level of theory.
+
+The signal is a trust boundary, not an error predictor: errors that are
+collective well-depth offsets spread over many individually-normal atoms are
+invisible to any per-atom signal (details, calibration, and the full
+signal-comparison study in [`OOD_NOTES.md`](OOD_NOTES.md)). Requires the
+reference pool for the chosen model in `data/` (see OOD_NOTES.md for the
+one-time build).
 
 ## OOD scoring & activation visualization
 
