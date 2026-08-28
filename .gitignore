@@ -57,11 +57,15 @@ smoke_*
 
 # --- OOD reference data (downloaded OFF23 test split + cached latent pool) ---
 # large: ~81 MB tarball + extracted extxyz + ~80 MB pool .npz
-data/
+# (the small sampled trajectories are committed so Colab can clone-and-run)
+data/*
+!data/rot1_sampled_10.xyz
+!data/rot1_sampled_250.xyz
 
 # --- Jupyter ---
 .ipynb_checkpoints/
 *.ipynb
+!notebooks/*.ipynb
 
 # --- OS / editor ---
 .DS_Store

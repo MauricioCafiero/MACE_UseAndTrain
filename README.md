@@ -10,6 +10,11 @@ residuals, precision disagreement).
 
 Tested on an Apple A18 Pro laptop, macOS, **CPU-only**.
 
+**No GPU? Run it on Colab:** [`notebooks/colab_gfn2_finetune.ipynb`](notebooks/colab_gfn2_finetune.ipynb)
+clones this repo, GFN2-labels the 250-frame rotaxane sample, builds the latent
+reference pool, fine-tunes `off-medium` on GPU (energy + forces), and re-scores
+before/after with per-atom OOD maps — no local install needed.
+
 ## Files
 
 All Python modules live in `code/`. Run scripts from the repo root as
@@ -32,6 +37,11 @@ path).
 | `code/ood_datasets.py` | Grounded OOD test set from computation-ready datasets (S66 non-covalent dimers + S30L-CI host-guest complexes), scored vs the OFF23 reference pool. |
 | `code/energy_ood.py` | Energy-space OOD signals: per-atom interaction-energy residual (`eZ`, |z| + signed molecule-mean), latent-kNN energy consistency (`kZ`), and the layer-contribution profile (system-level). |
 | `code/precision_ood.py` | Precision-disagreement signal: \|E_assoc(f32) − E_assoc(f64)\| — system-level, pool-free. |
+| `code/layer_sweep.py` | Sweep candidate latent layers for the OOD signal (`data/layer_sweep_results.json`). |
+| `code/trust_frames.py` | trust.py per frame: multi-frame XYZ → per-frame energy + mean OOD + verdict summary table. |
+| `code/ood_map.py` | 3D per-atom OOD maps: neutral ball-and-stick with halos on unusual atoms (fixed 0–0.5 scale, cached scoring). |
+| `code/gfn2_label.py` | Torch-free GFN2-xTB labeling of XYZ frames → extxyz for `mace_run_train` (multiprocess; avoids the torch/tblite libomp clash). |
+| `notebooks/colab_gfn2_finetune.ipynb` | The 250-frame GFN2 fine-tune + OOD-rescore workflow, end to end, on a Colab GPU. |
 
 ## Environment
 
