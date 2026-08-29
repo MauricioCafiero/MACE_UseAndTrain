@@ -14,6 +14,9 @@ Tested on an Apple A18 Pro laptop, macOS, **CPU-only**.
 clones this repo, GFN2-labels the 250-frame rotaxane sample, builds the latent
 reference pool, fine-tunes `off-medium` on GPU (energy + forces), and re-scores
 before/after with per-atom OOD maps — no local install needed.
+[`notebooks/colab_gfn2_finetune_large.ipynb`](notebooks/colab_gfn2_finetune_large.ipynb)
+is the same workflow for the deployed **off-large** checkpoint (adds the
+size-matched stock-pool control; artifacts download directly to your browser).
 
 ## Files
 
@@ -42,6 +45,7 @@ path).
 | `code/ood_map.py` | 3D per-atom OOD maps: neutral ball-and-stick with halos on unusual atoms (fixed 0–0.5 scale, cached scoring). |
 | `code/gfn2_label.py` | Torch-free GFN2-xTB labeling of XYZ frames → extxyz for `mace_run_train` (multiprocess; avoids the torch/tblite libomp clash). |
 | `notebooks/colab_gfn2_finetune.ipynb` | The 250-frame GFN2 fine-tune + OOD-rescore workflow, end to end, on a Colab GPU. |
+| `notebooks/colab_gfn2_finetune_large.ipynb` | Same, for **off-large** — adds the size-matched CHNOF stock-pool control cell (the like-for-like baseline). |
 
 ## Environment
 
