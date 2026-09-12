@@ -76,3 +76,7 @@ data/*
 # --- finetuned checkpoints (committed deliberately, ~36 MB) ---
 !finetuned/
 !finetuned/*.model
+
+# --- rotaxane target-chemistry benchmark (small, tracked) ---
+!data/rotaxane_bench/
+!data/rotaxane_bench/**

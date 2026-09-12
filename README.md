@@ -43,6 +43,7 @@ path).
 | `code/modal_finetune.py` | The fine-tune on a Modal GPU, with an optional benchmark gate in the same run. |
 | `code/modal_ood.py` | Both reference pools + before/after OOD scoring on a Modal GPU. |
 | `code/plot_ood_hist.py` | Stock-vs-finetuned OOD histograms. |
+| `code/rotaxane_bench.py` | **Target-chemistry benchmark:** rotaxane wheel/rod stacking vs DLPNO-CCSD(T) and whole-structure double stacks vs UMA (`data/rotaxane_bench/`). |
 | `code/run_examples.py` | End-to-end demo (all of the above on H₂O/CH₃OH/NH₃). |
 | `code/time_rosuvastatin.py` | Timed single-point benchmark on rosuvastatin (writes `rosuvastatin.xyz`). |
 | `code/inspect_activations.py` | Capture MACE layer/neuron activations during a single-point pass (PyTorch forward hooks). |
@@ -264,6 +265,19 @@ kcal/mol. S30L systems 9/10 (exohedral fullerenes) are excluded because stock
 off-medium already fails them by 70–85 kcal/mol before any fine-tuning; see
 `OOD_NOTES.md` for the full table, both model sizes, and the reference-pool
 caveats.
+
+Then check it on the chemistry you actually fine-tuned for:
+
+```bash
+python code/rotaxane_bench.py --models off-medium ft-medium
+```
+
+Rotaxane wheel/rod stacking against DLPNO-CCSD(T)/aug-cc-pVTZ, plus
+whole-structure double stacks against UMA. Note what it reports: the fine-tune
+improves *conformational* energies but **degrades interaction energies**, where
+stock MACE-OFF is already more accurate than GFN2 itself. A finetuned checkpoint
+carries two heads — use `Default` for GFN2-level conformational work and
+`pt_head` (stock-grade) for interaction energies.
 
 ### 3. Use the fine-tuned model
 

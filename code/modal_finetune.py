@@ -64,7 +64,7 @@ TRAIN_H, GATE_H = 4 * 3600, 3600
 def train(gpu: str = "A10G", epochs: int = 30, lr: float = 1e-4,
           weight_pt_head: float = 1.0, replay: bool = True,
           name: str = "rot250L_replay", batch_size: int = 4,
-          foundation: str = "off-large") -> str:
+          foundation: str = "off-large", dataset: str = "rot250") -> str:
     """Run mace_run_train on the GPU; returns the checkpoint path on the volume."""
     import subprocess
     import sys
@@ -81,7 +81,8 @@ def train(gpu: str = "A10G", epochs: int = 30, lr: float = 1e-4,
               "weight_pt_head": weight_pt_head}
 
     cmd = build_train_command(
-        "/root/data/rot250_gfn2_train.xyz", "/root/data/rot250_gfn2_valid.xyz",
+        f"/root/data/{dataset}_gfn2_train.xyz",
+        f"/root/data/{dataset}_gfn2_valid.xyz",
         foundation_model=("/root/foundation/MACE-OFF23_"
                           f"{'medium' if foundation == 'off-medium' else 'large'}.model"),
         e0s=GFN2_E0S,                      # NOT "average": that fit is degenerate
@@ -131,7 +132,8 @@ def gate(model_path: str, label: str = "ft-replay") -> str:
 def main(gpu: str = "A10G", epochs: int = 30, lr: float = 1e-4,
          weight_pt_head: float = 1.0, no_replay: bool = False,
          name: str = None, batch_size: int = 4,
-         skip_gate: bool = False, foundation: str = "off-large"):
+         skip_gate: bool = False, foundation: str = "off-large",
+         dataset: str = "rot250"):
     if foundation not in _FOUNDATIONS:
         raise SystemExit(f"foundation must be one of {sorted(_FOUNDATIONS)}")
     name = name or ("rot250M_replay" if foundation == "off-medium"
@@ -148,7 +150,7 @@ def main(gpu: str = "A10G", epochs: int = 30, lr: float = 1e-4,
     ckpt = train.with_options(**opts).remote(
         gpu=gpu, epochs=epochs, lr=lr, weight_pt_head=weight_pt_head,
         replay=not no_replay, name=name, batch_size=batch_size,
-        foundation=foundation)
+        foundation=foundation, dataset=dataset)
 
     local = _REPO / "runs" / f"{name}.model"
     local.parent.mkdir(exist_ok=True)

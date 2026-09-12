@@ -25,6 +25,7 @@ _FOUNDATIONS = {"off-medium": _CACHE / "MACE-OFF23_medium.model",
                 "off-large": _CACHE / "MACE-OFF23_large.model"}
 # finetuned checkpoints, by the foundation they were built from
 _CKPTS = {"off-medium": "rot250M_replay.model", "off-large": "rot250L_replay.model"}
+_BASE = {"off-medium": "off-medium", "off-large": "off-large"}
 # Ship the OFF23 test tarball rather than letting the container fetch it: the
 # Cambridge repository has been flaky, and a mid-run failure costs GPU minutes.
 _OFF23_TGZ = _DATA / "off23_test" / "test_large_neut_no_bad_clean.tar.gz"
@@ -81,8 +82,9 @@ def run(n_frames: int = 2500, model: str = "off-large") -> str:
     print("device:", dev, flush=True)
 
     ckpt = f"/root/runs/{_CKPTS[model]}"
-    print("stock:", model, "| finetuned:", ckpt, flush=True)
-    stock = mc.get_calculator(model=model, dtype="float64", device=dev)
+    base = _BASE[model]
+    print("stock:", base, "| finetuned:", ckpt, flush=True)
+    stock = mc.get_calculator(model=base, dtype="float64", device=dev)
     ft = MACECalculator(model_paths=ckpt, device=dev, default_dtype="float64")
 
     # --- both pools, same frames, differing only in encoder -----------------
@@ -95,7 +97,7 @@ def run(n_frames: int = 2500, model: str = "off-large") -> str:
             pools[tag] = ReferencePool.load(out)
         else:
             mc.get_calculator = lambda _c=calc, **kw: _c
-            pools[tag] = ReferencePool.build(n_frames=n_frames, model=model,
+            pools[tag] = ReferencePool.build(n_frames=n_frames, model=base,
                                              out=out)
             mc.get_calculator = orig
             vol.commit()
@@ -136,12 +138,12 @@ def run(n_frames: int = 2500, model: str = "off-large") -> str:
 @app.local_entrypoint()
 def main(gpu: str = "L4", n_frames: int = 2500, pull_pools: bool = True,
          model: str = "off-large"):
-    if model not in _FOUNDATIONS:
-        raise SystemExit(f"model must be one of {sorted(_FOUNDATIONS)}")
+    if model not in _CKPTS:
+        raise SystemExit(f"model must be one of {sorted(_CKPTS)}")
     opts = {"gpu": gpu} if gpu != "L4" else {}
     out = run.with_options(**opts).remote(n_frames=n_frames, model=model)
-    dest = _DATA / (f"replay_ood_scores_{model}.json" if model == "off-medium"
-                    else "replay_ood_scores.json")
+    dest = _DATA / ("replay_ood_scores.json" if model == "off-large"
+                    else f"replay_ood_scores_{model}.json")
     dest.write_text(out)
     print(f"\nscores -> {dest}")
 
