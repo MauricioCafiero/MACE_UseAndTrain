@@ -73,3 +73,6 @@ data/*
 *~
 .idea/
 .vscode/
+# --- finetuned checkpoints (committed deliberately, ~36 MB) ---
+!finetuned/
+!finetuned/*.model
