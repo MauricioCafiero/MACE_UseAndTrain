@@ -10,7 +10,13 @@ residuals, precision disagreement).
 
 Tested on an Apple A18 Pro laptop, macOS, **CPU-only**.
 
-**No GPU? Run it on Colab:** [`notebooks/colab_gfn2_finetune.ipynb`](notebooks/colab_gfn2_finetune.ipynb)
+**No GPU?** `modal run code/modal_finetune.py` is the current fine-tune path
+(replay head + real E0s, benchmark-gated). The Colab notebooks below predate
+that recipe — they omit the replay file, so their checkpoints forget chemistry
+outside the fine-tune set; use them for the data/OOD workflow, not the
+fine-tune settings.
+
+[`notebooks/colab_gfn2_finetune.ipynb`](notebooks/colab_gfn2_finetune.ipynb)
 clones this repo, GFN2-labels the 250-frame rotaxane sample, builds the latent
 reference pool, fine-tunes `off-medium` on GPU (energy + forces), and re-scores
 before/after with per-atom OOD maps — no local install needed.
@@ -31,7 +37,12 @@ path).
 | `code/trust.py` | **The main entry point:** SMILES/XYZ → MACE single point → energy + OOD signal → TRUST/VERIFY verdict. See `OOD_NOTES.md`. |
 | `code/mace_calc.py` | MACE as an ASE calculator: single point, optimize, vibrations, MD. Autodetects OFF23 vs OMOL from the elements. |
 | `code/gfn2_data.py` | GFN2-xTB (TBLite/ASE): relax → MD + normal-mode sampling → extxyz with energy & forces. |
-| `code/finetune_mace.py` | Builds/launches `mace_run_train` to fine-tune a MACE foundation model on the GFN2 data. |
+| `code/finetune_mace.py` | Builds/launches `mace_run_train` to fine-tune a MACE foundation model on the GFN2 data (replay head + real E0s). |
+| `code/make_replay.py` | Builds the replay (`--pt_train_file`) set from the OFF23 test split — required for MACE-OFF fine-tunes. |
+| `code/forgetting.py` | **Fine-tune acceptance gate:** S66/S30L interaction energies vs reference, with GFN2-xTB and training-distribution controls. |
+| `code/modal_finetune.py` | The fine-tune on a Modal GPU, with an optional benchmark gate in the same run. |
+| `code/modal_ood.py` | Both reference pools + before/after OOD scoring on a Modal GPU. |
+| `code/plot_ood_hist.py` | Stock-vs-finetuned OOD histograms. |
 | `code/run_examples.py` | End-to-end demo (all of the above on H₂O/CH₃OH/NH₃). |
 | `code/time_rosuvastatin.py` | Timed single-point benchmark on rosuvastatin (writes `rosuvastatin.xyz`). |
 | `code/inspect_activations.py` | Capture MACE layer/neuron activations during a single-point pass (PyTorch forward hooks). |
@@ -196,24 +207,63 @@ special-casing of `energy`/`forces`) and `energy`/`forces`. Fine-tune with the
 
 ### 2. Fine-tune a MACE foundation model
 
+Two arguments decide whether the fine-tune keeps the foundation model's
+chemistry. **Pass both.**
+
+* `pt_train_file=` — the *replay* set. `mace_run_train` trains the new level of
+  theory on one head while replaying foundation-level data through a second
+  head, and that replay is what stops the shared layers from drifting. MACE can
+  only self-supply it for Materials Project models; with MACE-OFF it warns and
+  silently trains single-head. Build one with
+  `python code/make_replay.py --n 4000` (OFF23 test split → 3600 train / 400
+  valid, dimers included, all 10 elements).
+* `e0s=ft.GFN2_E0S` — real isolated-atom energies. The default `"average"`
+  least-squares-fits the atomic baseline from the training set, which is
+  degenerate when that set is one molecule (fixed stoichiometry cannot separate
+  the elements) and yields a chemically meaningless baseline.
+
 ```python
 import finetune_mace as ft
 
-# foundation_model accepts a mace_calc alias (resolved to a cached .model path)
-# or a bare path / "medium" / "large" shorthand.
-cmd = ft.build_train_command(
-    stats["train_file"], stats["valid_file"],
-    foundation_model="off-medium",
-    energy_key="REF_energy", forces_key="REF_forces",
-    results_dir="runs",
+ft.run_finetune(
+    "data/rot250_gfn2_train.xyz", "data/rot250_gfn2_valid.xyz",
+    foundation_model="off-large",
+    pt_train_file="data/off23_replay_train.xyz",     # replay head — mandatory
+    pt_valid_file="data/off23_replay_valid.xyz",
+    e0s=ft.GFN2_E0S,                                  # not "average"
+    energy_weight=100.0, forces_weight=100.0,         # forces must carry weight
+    max_num_epochs=20, lr=5e-4,
+    results_dir="runs", device="cuda", default_dtype="float32",
 )
-# inspect the command, then launch (CPU-slow — see notes below):
-ft.run_finetune(stats["train_file"], stats["valid_file"],
-                foundation_model="off-medium", results_dir="runs")
 ```
 
-This wraps `mace_run_train`. The fine-tuned model is written to
-`runs/gfn2_finetune_run-<i>.model`.
+This wraps `mace_run_train`; the checkpoint lands in
+`runs/<name>_run-<i>.model` and carries two heads, `['pt_head', 'Default']`
+(`MACECalculator` picks `Default`, the newly taught level, automatically).
+Omitting `pt_train_file` still works but logs a warning — the model will forget
+chemistry outside the fine-tune set.
+
+**On a GPU:** `modal run code/modal_finetune.py` runs the whole thing on Modal
+(~2.2 h on an L4 for 20 epochs over 225 frames + 4000 replay frames), downloads
+the checkpoint, and can gate it on the benchmarks in the same run.
+
+**Always gate the result.** A fine-tune's own validation loss says nothing about
+what it forgot. `python code/forgetting.py --stage report` scores the checkpoint
+on S66 and S30L-CI interaction energies against CCSD(T)/CBS and DFT references,
+with GFN2-xTB itself as the control for the level being taught:
+
+| model | S66 MAE | S30L excl. fullerenes | rotaxane vs GFN2 |
+|---|---|---|---|
+| stock off-medium | 0.26 | 3.76 | 6.36 |
+| finetuned off-medium | 0.90 | 3.16 | 2.19 |
+| stock off-large | 0.22 | 3.02 | 6.22 |
+| finetuned off-large | 1.72 | 7.27 | 1.87 |
+| GFN2-xTB (target level) | 0.73 | 5.55 | — |
+
+kcal/mol. S30L systems 9/10 (exohedral fullerenes) are excluded because stock
+off-medium already fails them by 70–85 kcal/mol before any fine-tuning; see
+`OOD_NOTES.md` for the full table, both model sizes, and the reference-pool
+caveats.
 
 ### 3. Use the fine-tuned model
 
@@ -233,9 +283,12 @@ ft.eval_model(model_path, atoms)
 ```
 
 Notes on fine-tuning:
-* `--E0s=average` (default) derives per-element reference energies from the
-  data. For a cleaner baseline, compute GFN2 isolated-atom energies with
-  `ft.compute_e0s_gfn2(["H","C","N","O","F","S"])` and pass that dict as `e0s=`.
+* **Pass real E0s.** `finetune_mace.GFN2_E0S` ships measured GFN2 isolated-atom
+  energies for the 10 OFF23 elements; `ft.compute_e0s_gfn2([...])` computes them
+  for any element set. The `--E0s=average` default fits the baseline from the
+  training data, which is degenerate on a narrow (single-molecule) set — it also
+  strips the `z_table` down to the training elements, so the checkpoint loses
+  every element the fine-tune set does not contain.
   Ground-state multiplicities are built in for the common organic elements
   (H, B, C, N, O, F, Si, P, S, Cl, Br, I); pass `multiplicity={"Fe": 5}` to
   cover others (by symbol or atomic number).

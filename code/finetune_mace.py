@@ -271,6 +271,30 @@ def cached_model_path(alias: str = "off-medium") -> str:
     raise RuntimeError(f"Could not locate cached model for {alias!r} in {cache_dir}.")
 
 
+# Isolated-atom GFN2-xTB energies (eV), computed with correct ground-state
+# multiplicities by :func:`compute_e0s` -- the physically right baseline to pass
+# as ``e0s=``. Pass these instead of ``"average"``: a least-squares E0 fit over a
+# single-molecule training set is degenerate (fixed stoichiometry gives the fit
+# no way to separate the elements), and the rotaxane fine-tune's fitted values
+# came out chemically meaningless -- H -58.81, C -60.84, N -2.03, O -10.14 eV,
+# off by up to +92 eV/atom -- forcing the readouts to absorb an enormous bogus
+# per-atom baseline. See OOD_NOTES.md "catastrophic forgetting".
+def _e0s_literal(d: dict[int, float]) -> str:
+    """Render ``{Z: energy}`` the way ``mace_run_train --E0s`` wants to read it.
+
+    MACE parses this argument with ``ast.literal_eval`` and then looks the
+    elements up by *integer* atomic number, so JSON (which stringifies keys)
+    fails at runtime with "Atomic number np.int64(1) not found in
+    atomic_energies_dict". Emit a Python dict literal with int keys instead.
+    """
+    return "{" + ", ".join(f"{int(k)}: {v}" for k, v in sorted(d.items())) + "}"
+
+
+GFN2_E0S = {1: -10.707211, 6: -48.798080, 7: -70.908087, 8: -102.521807,
+            9: -125.698643, 15: -64.604696, 16: -85.619453, 17: -121.975722,
+            35: -110.160925, 53: -102.848978}
+
+
 def build_train_command(
     train_file: Union[str, Path],
     valid_file: Union[str, Path],
@@ -280,6 +304,9 @@ def build_train_command(
     forces_key: str = "REF_forces",
     stress_key: Optional[str] = None,
     e0s: Union[str, dict[int, float]] = "average",
+    pt_train_file: Optional[Union[str, Path]] = None,
+    pt_valid_file: Optional[Union[str, Path]] = None,
+    weight_pt_head: float = 1.0,
     e0s_multiplicity: Optional[dict[Union[int, str], int]] = None,
     e0s_box_A: float = 12.0,
     model: str = "MACE",
@@ -339,11 +366,17 @@ def build_train_command(
             train_file, valid_file,
             multiplicity=e0s_multiplicity, box_A=e0s_box_A,
         )
-        e0s_arg = json.dumps({str(k): v for k, v in sorted(e0s_dict.items())})
+        e0s_arg = _e0s_literal(e0s_dict)
     elif isinstance(e0s, dict):
-        e0s_arg = json.dumps({str(k): v for k, v in sorted(e0s.items())})
+        e0s_arg = _e0s_literal(e0s)
     else:
         e0s_arg = str(e0s)
+        if e0s_arg == "average":
+            log.warning(
+                "e0s='average' least-squares-fits the atomic baseline from the "
+                "training set; on a single-composition set (one molecule) that "
+                "fit is degenerate and comes out chemically wrong. Prefer "
+                "e0s=GFN2_E0S (or e0s='auto').")
 
     cmd = [
         "mace_run_train",
@@ -367,6 +400,24 @@ def build_train_command(
         "--default_dtype", default_dtype,
         "--patience", str(patience),
     ]
+    # Replay head. mace_run_train defaults --multiheads_finetuning to True but
+    # can only self-supply replay data for Materials Project foundation models;
+    # with MACE-OFF it warns and silently falls back to a single head, which is
+    # what let the rotaxane fine-tune forget its non-covalent chemistry. So be
+    # explicit in both directions.
+    if pt_train_file is not None:
+        cmd += ["--multiheads_finetuning", "True",
+                "--pt_train_file", str(pt_train_file),
+                "--weight_pt_head", str(weight_pt_head)]
+        if pt_valid_file is not None:
+            cmd += ["--pt_valid_file", str(pt_valid_file)]
+    else:
+        cmd += ["--multiheads_finetuning", "False"]
+        log.warning(
+            "No pt_train_file: fine-tuning single-head, with NO replay of the "
+            "foundation distribution. Expect catastrophic forgetting outside "
+            "the fine-tune set (see code/make_replay.py and forgetting.py).")
+
     if stress_key is not None:
         cmd += ["--stress_key", stress_key, "--stress_weight", "1.0"]
     if ema:
