@@ -80,3 +80,6 @@ data/*
 # --- rotaxane target-chemistry benchmark (small, tracked) ---
 !data/rotaxane_bench/
 !data/rotaxane_bench/**
+
+# --- MOPAC scratch (mopac_calc.py writes <label>.mop/.out/.arc here) ---
+mopac_runs/
