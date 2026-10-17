@@ -36,6 +36,7 @@ path).
 |---|---|
 | `code/trust.py` | **The main entry point:** SMILES/XYZ → MACE single point → energy + OOD signal → TRUST/VERIFY verdict. See `OOD_NOTES.md`. |
 | `code/mace_calc.py` | MACE as an ASE calculator: single point, optimize, vibrations, MD. Autodetects OFF23 vs OMOL from the elements. |
+| `code/mopac_calc.py` | MOPAC semi-empirical (PM7, PM6-D3H4, ...) as an ASE calculator: same four tasks as `mace_calc.py`, a cheap QM baseline. Needs the `mopac` binary (conda-forge). |
 | `code/gfn2_data.py` | GFN2-xTB (TBLite/ASE): relax → MD + normal-mode sampling → extxyz with energy & forces. |
 | `code/finetune_mace.py` | Builds/launches `mace_run_train` to fine-tune a MACE foundation model on the GFN2 data (replay head + real E0s). |
 | `code/make_replay.py` | Builds the replay (`--pt_train_file`) set from the OFF23 test split — required for MACE-OFF fine-tunes. |
@@ -163,6 +164,32 @@ mc.smiles_to_xyz("CC(C)C1=NC(=NC(=C1C=CC(CC(CC(=O)O)O)O)C2=CC=C(C=C2)F)N(C)S(=O)
 
 If MMFF is unavailable for an element set, `smiles_to_atoms` falls back to UFF.
 The MMFF-relaxed conformer is a good starting point for a MACE optimization.
+
+### MOPAC baseline
+
+`mopac_calc.py` runs the same four tasks with MOPAC as the engine. MOPAC is a
+compiled binary, so install it in its own conda env and link it onto your PATH:
+
+```bash
+conda create -n mopac -c conda-forge mopac
+ln -s ~/miniforge3/envs/mopac/bin/mopac ~/.local/bin/mopac
+```
+
+```python
+import mopac_calc as mp
+
+mp.optimize(atoms, method="PM7", fmax=0.01)   # any MOPAC Hamiltonian: PM6-D3H4, AM1, ...
+vib = mp.vibrations(atoms, method="PM7")
+mp.singlepoint(atoms, method="PM7", extra="EPS=78.4")   # extra keywords, e.g. COSMO water
+
+# or attach ASE's calculator directly:
+from ase.calculators.mopac import MOPAC
+atoms.calc = MOPAC(method="PM7")
+```
+
+ASE reports MOPAC's **heat of formation** (in eV) as the energy, so compare
+MOPAC energies with each other, not with MACE absolute energies. Scratch files
+go to `mopac_runs/` (gitignored).
 
 ## Full pipeline: SMILES → GFN2 data → fine-tuned MACE
 
