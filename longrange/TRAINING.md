@@ -6,7 +6,7 @@ Ground rules that apply throughout:
 
 - Ask before spending on Modal, and give a cost estimate. Never stop, cancel or kill a running job without asking, even for budget.
 - Don't edit a shell script while it is running; zsh reads scripts incrementally.
-- Caffeinate anything long. Launch multi-hour jobs detached (see step 3).
+- Caffeinate anything long. Launch multi-hour jobs detached (see step 3). The launcher's `caffeinate -w $$` dies with the launcher and the laptop then sleeps at once, so also keep a project-long `caffeinate -ims` running that is tied to no process. Start it detached: `~/miniforge3/bin/python -c "import subprocess; p=subprocess.Popen(['caffeinate','-ims'], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True); open('longrange/caffeinate.pid','w').write(str(p.pid))"`. Stop it by hand with `kill $(cat longrange/caffeinate.pid)`.
 - Results stay in `longrange/`, not a scratchpad.
 
 ## Why from scratch

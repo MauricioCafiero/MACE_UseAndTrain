@@ -16,8 +16,8 @@ CODE = Path(__file__).resolve().parents[1] / "code"
 RUNS = {"6 A": ["modal_wide20k_r6.log", "modal_wide20k_r6_lr1e-3.log"],
         "12 A": ["modal_wide20k_r12.log", "modal_wide20k_r12_lr1e-3.log"]}
 # spice20k: SPICE elements, |q|<=2, metals forced in, ORCA E0s, lr1e-3, e:f 10:10
-SPICE_RUNS = {"6 A spice20k": ["modal_spice20k_r6.log"],
-              "12 A spice20k": ["modal_spice20k_r12.log"]}
+SPICE_RUNS = {"6 A spice20k": ["modal_spice20k_r6.log", "modal_spice20k_r6_ep30.log"],
+              "12 A spice20k": ["modal_spice20k_r12.log", "modal_spice20k_r12_ep30.log"]}
 import sys
 if "--spice" in sys.argv:
     RUNS = SPICE_RUNS

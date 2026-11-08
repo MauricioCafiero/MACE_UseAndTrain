@@ -11,9 +11,11 @@ Writes longrange/scan/results/{scan_table.tsv,summary.txt,<pair>.png}.
 Runs with 2 threads so it can share the laptop with ORCA (6 cores).
 
     OMP_NUM_THREADS=2 KMP_DUPLICATE_LIB_OK=TRUE .venv/bin/python longrange/scan/eval_scans.py
+    ... eval_scans.py ep30   # models omol_spice20k_r{6,12}_ep30, output results_ep30/
 """
 import json
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -23,11 +25,13 @@ from ase.io import read
 torch.set_num_threads(2)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
-OUT = HERE / "results"
+TAG = sys.argv[1] if len(sys.argv) > 1 else ""        # e.g. "ep30" -> *_ep30 models
+SUF = f"_{TAG}" if TAG else ""
+OUT = HERE / f"results{SUF}"
 OUT.mkdir(exist_ok=True)
 KCAL_EH, KCAL_EV = 627.509474, 23.060548
-MODELS = {"r6": REPO / "runs/scratch/omol_spice20k_r6/omol_spice20k_r6.cpu.model",
-          "r12": REPO / "runs/scratch/omol_spice20k_r12/omol_spice20k_r12.cpu.model"}
+MODELS = {f"r{r}": REPO / f"runs/scratch/omol_spice20k_r{r}{SUF}/omol_spice20k_r{r}{SUF}.cpu.model"
+          for r in (6, 12)}
 PAT = re.compile(r"FINAL SINGLE POINT ENERGY\s+(-?\d+\.\d+)")
 QM = re.compile(r"\*\s*xyzfile\s+(-?\d+)\s+(\d+)")
 
