@@ -1,0 +1,49 @@
+=== lr-mace6 sult start: Sun  8 Nov 2026 22:29:33 GMT ===
+  [lr-mace6] 75/114 (16.6s)
+  [lr-mace6] 100/114 (25.4s)
+  [lr-mace6] 114/114 (31.1s)
+=== lr-mace6 ddc start: Sun  8 Nov 2026 22:30:06 GMT ===
+  [lr-mace6] 150/186 (43.8s)
+  [lr-mace6] 175/186 (53.6s)
+  [lr-mace6] 186/186 (57.5s)
+=== lr-mace6 comt start: Sun  8 Nov 2026 22:31:06 GMT ===
+  [lr-mace6] 200/246 (52.7s)
+  [lr-mace6] 225/246 (61.5s)
+  [lr-mace6] 246/246 (69.4s)
+=== lr-mace6 aldh start: Sun  8 Nov 2026 22:32:18 GMT ===
+  [lr-mace6] 175/214 (39.4s)
+  [lr-mace6] 200/214 (49.4s)
+  [lr-mace6] 214/214 (54.8s)
+=== lr-mace12 sult start: Sun  8 Nov 2026 22:33:15 GMT ===
+  [lr-mace12] 75/114 (30.3s)
+  [lr-mace12] 100/114 (45.5s)
+  [lr-mace12] 114/114 (55.3s)
+=== lr-mace12 ddc start: Sun  8 Nov 2026 22:34:13 GMT ===
+  [lr-mace12] 150/186 (175.9s)
+  [lr-mace12] 175/186 (192.1s)
+  [lr-mace12] 186/186 (198.6s)
+=== lr-mace12 comt start: Sun  8 Nov 2026 22:37:36 GMT ===
+  [lr-mace12] 200/246 (241.9s)
+  [lr-mace12] 225/246 (256.4s)
+  [lr-mace12] 246/246 (269.7s)
+=== lr-mace12 aldh start: Sun  8 Nov 2026 22:42:11 GMT ===
+  [lr-mace12] 175/214 (59.9s)
+  [lr-mace12] 200/214 (73.7s)
+  [lr-mace12] 214/214 (81.4s)
+=== lr-polar6 sult start: Sun  8 Nov 2026 22:43:36 GMT ===
+  [lr-polar6] 75/114 (65.8s)
+  [lr-polar6] 100/114 (93.5s)
+  [lr-polar6] 114/114 (110.5s)
+=== lr-polar6 ddc start: Sun  8 Nov 2026 22:45:29 GMT ===
+  [lr-polar6] 150/186 (133.0s)
+  [lr-polar6] 175/186 (158.0s)
+  [lr-polar6] 186/186 (168.9s)
+=== lr-polar6 comt start: Sun  8 Nov 2026 22:48:21 GMT ===
+  [lr-polar6] 200/246 (194.2s)
+  [lr-polar6] 225/246 (223.0s)
+  [lr-polar6] 246/246 (249.0s)
+=== lr-polar6 aldh start: Sun  8 Nov 2026 22:52:33 GMT ===
+  [lr-polar6] 175/214 (172.8s)
+  [lr-polar6] 200/214 (207.6s)
+  [lr-polar6] 214/214 (226.2s)
+=== lr-polar12 sult start: Sun  8 Nov 2026 22:56:22 GMT ===
