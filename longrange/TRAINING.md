@@ -170,3 +170,22 @@ All evaluation runs locally on the CPU models. Use 2 threads while ORCA is runni
 - `longrange/frame_errors.py <model> <label> omol25_spice20k`: per-frame validation errors by charge, multiplicity, element and size.
 - `longrange/eval_cafquant.py <model> <label>`: cafquant's charge-separation sweep and DFT spot checks.
 - `longrange/scan/make_scans.py`, `run_scan_seq.sh` and `eval_scans.py`: rigid distance scans against ORCA. Results are in `longrange/SCAN_NOTES.md`.
+
+## 9. PolarMACE from scratch (2026-11-08)
+
+Results: `SCAN_NOTES_polar.md`. Same 20k frames, E0s, lr 1e-3 and 10:10 weights as above; `--polar` selects PolarMACE with MACE-POLAR-1's electrostatics settings (`POLAR_ARGS` in `code/modal_finetune.py`) and no charge/spin embeddings.
+
+- **Centre the data first.** mace forges a vacuum box (max|pos|+1)·5·r_max per non-periodic frame and PolarMACE's k-grid scales with its cube. `data/omol25_spice20k_c_{train,valid}.xyz` are the spice20k frames shifted to their centroids (energies and forces unchanged): `a.positions -= a.positions.mean(0)` for every frame.
+- **k-grid patch.** Even centred, the unused k-grid ran out of GPU memory. For non-periodic frames PolarMACE takes the real-space path and never reads it, so `train_scratch_polar` shrinks it to k = 0 before calling mace's `run_train` (valid only for non-periodic data). `eval_scans.py` and `frame_errors.py` apply the same patch.
+- **Image.** `polar_image` copies `graph_longrange` 0.4.0 and `nvalchemiops` 0.5.0 from cafquant's venv (not on PyPI at these versions) and sets `TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1`.
+- **Seed.** `--seed` (default 123). The 6 Å seed-123 run was unstable and did not recover at lr 3e-4; seed 7 converged. If a POLAR run spikes by 10–1000× in its first epochs, try another seed before changing the lr.
+- **Launch** (detached as in step 3):
+
+  ```sh
+  zsh code/run_modal_scratch.sh 6 20 5 omol_spice20k_polar_r6_s7 omol25_spice20k_c --lr 1e-3 --energy-weight 10 --forces-weight 10 --e0s-json <e0s.json> --polar --seed 7
+  zsh code/run_modal_scratch.sh 12 20 12 omol_spice20k_polar_r12 omol25_spice20k_c --lr 1e-3 --energy-weight 10 --forces-weight 10 --e0s-json <e0s.json> --polar
+  ```
+
+- **Measured:** 13.5 min/epoch (6 Å), 18.1 min/epoch (12 Å) on the L4.
+- **Local evaluation** needs `graph_longrange`: use `/Users/cafierom/python_mac/cafquant/.venv/bin/python` for `to_cpu.py`, `eval_scans.py polar|polar1` and `frame_errors.py --polar`. Run one at a time on this laptop.
+- **Monitoring:** `.venv/bin/python longrange/epoch_table.py --polar`.

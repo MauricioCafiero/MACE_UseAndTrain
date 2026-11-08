@@ -1,0 +1,154 @@
+/Users/cafierom/python_mac/cafquant/.venv/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/Users/cafierom/python_mac/cafquant/.venv/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+/Users/cafierom/python_mac/cafquant/.venv/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+
+CH4-CH4  [neutral nonpolar (disp, r^-6)]  q=+0/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |      -0.23 |      -0.19 |       -0.17 |     0.81 |     0.75
+    4.0 |      -0.09 |      -0.01 |       -0.04 |     0.11 |     0.51
+    5.0 |      -0.03 |      -0.01 |       -0.01 |      nan |      nan
+    6.0 |      -0.01 |      -0.01 |       -0.00 |      nan |      nan
+    8.0 |      -0.00 |      -0.00 |       +0.00 |      nan |      nan
+   10.0 |      -0.00 |      -0.00 |       +0.00 |      nan |      nan
+   12.0 |      -0.00 |      -0.00 |       +0.00 |      nan |      nan
+   14.0 |      -0.00 |      -0.00 |       +0.00 |      nan |      nan
+  polar1s: curve flat beyond 3.5 A; raw dE at 20 A -0.00 (DFT -0.00) kcal/mol
+  polar1m: curve flat beyond 2.5 A; raw dE at 20 A +0.00 (DFT -0.00) kcal/mol
+
+bz-bz_stack  [neutral nonpolar (disp+quad)]  q=+0/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     +11.68 |      +7.01 |       +8.52 |     0.60 |     0.73
+    4.0 |      -1.86 |      -2.28 |       -1.94 |     1.22 |     1.04
+    5.0 |      -0.77 |      -0.47 |       -0.25 |     0.62 |     0.33
+    6.0 |      -0.23 |      +0.16 |       +0.21 |    -0.70 |    -0.91
+    8.0 |      +0.01 |      +0.05 |       +0.08 |      nan |      nan
+   10.0 |      +0.02 |      +0.02 |       +0.03 |      nan |      nan
+   12.0 |      +0.01 |      +0.01 |       +0.01 |      nan |      nan
+   14.0 |      +0.01 |      +0.00 |       +0.01 |      nan |      nan
+  polar1s: curve flat beyond 6.0 A; raw dE at 20 A +0.00 (DFT +0.00) kcal/mol
+  polar1m: curve flat beyond 6.0 A; raw dE at 20 A +0.00 (DFT +0.00) kcal/mol
+
+H2O-H2O_aligned  [neutral dipolar (dip-dip, r^-3)]  q=+0/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |      -2.02 |      -2.11 |       -2.02 |     1.04 |     1.00
+    4.0 |      -1.02 |      -1.05 |       -1.02 |     1.03 |     1.00
+    5.0 |      -0.55 |      -0.52 |       -0.52 |     0.95 |     0.94
+    6.0 |      -0.33 |      -0.27 |       -0.30 |     0.80 |     0.91
+    8.0 |      -0.14 |      -0.12 |       -0.15 |     0.80 |     1.03
+   10.0 |      -0.07 |      -0.05 |       -0.07 |     0.72 |     1.02
+   12.0 |      -0.04 |      -0.03 |       -0.04 |      nan |      nan
+   14.0 |      -0.02 |      -0.01 |       -0.02 |      nan |      nan
+  polar1s: curve flat beyond 6.0 A; raw dE at 20 A -0.01 (DFT -0.01) kcal/mol
+  polar1m: curve flat beyond 6.0 A; raw dE at 20 A -0.00 (DFT -0.01) kcal/mol
+
+MeCN-MeCN_h2t  [neutral dipolar (dip-dip, r^-3)]  q=+0/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |      -3.04 |      -3.37 |       -2.98 |     1.11 |     0.98
+    4.0 |      -1.88 |      -1.91 |       -1.85 |     1.02 |     0.98
+    5.0 |      -1.10 |      -0.97 |       -1.08 |     0.88 |     0.98
+    6.0 |      -0.70 |      -0.57 |       -0.69 |     0.81 |     0.99
+    8.0 |      -0.34 |      -0.26 |       -0.36 |     0.76 |     1.06
+   10.0 |      -0.19 |      -0.13 |       -0.20 |     0.71 |     1.06
+   12.0 |      -0.10 |      -0.07 |       -0.11 |     0.70 |     1.06
+   14.0 |      -0.06 |      -0.04 |       -0.06 |     0.70 |     1.05
+  polar1s: curve flat beyond 8.0 A; raw dE at 20 A -0.03 (DFT -0.04) kcal/mol
+  polar1m: curve flat beyond 8.0 A; raw dE at 20 A -0.04 (DFT -0.04) kcal/mol
+
+Na+-H2O  [ion-dipole (r^-2)]  q=+1/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     -15.90 |     -14.76 |      -15.38 |     0.93 |     0.97
+    4.0 |      -8.37 |      -7.33 |       -7.95 |     0.88 |     0.95
+    5.0 |      -5.05 |      -3.83 |       -4.43 |     0.76 |     0.88
+    6.0 |      -3.36 |      -1.91 |       -2.74 |     0.57 |     0.82
+    8.0 |      -1.72 |      -0.67 |       -1.37 |     0.39 |     0.80
+   10.0 |      -0.98 |      -0.25 |       -0.74 |     0.26 |     0.75
+   12.0 |      -0.58 |      -0.10 |       -0.42 |     0.17 |     0.72
+   14.0 |      -0.34 |      -0.03 |       -0.23 |     0.10 |     0.69
+  polar1s: curve flat beyond 10.0 A; raw dE at 20 A -2.10 (DFT -0.32) kcal/mol
+  polar1m: curve flat beyond 20.0 A; raw dE at 20 A -0.65 (DFT -0.32) kcal/mol
+
+Cl--H2O  [ion-dipole (r^-2)]  q=-1/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     -11.46 |     -10.03 |      -10.76 |     0.87 |     0.94
+    4.0 |      -6.87 |      -5.85 |       -6.37 |     0.85 |     0.93
+    5.0 |      -4.28 |      -3.23 |       -3.70 |     0.76 |     0.87
+    6.0 |      -2.89 |      -1.31 |       -2.31 |     0.45 |     0.80
+    8.0 |      -1.52 |      -0.22 |       -1.18 |     0.14 |     0.78
+   10.0 |      -0.88 |      +0.05 |       -0.64 |    -0.06 |     0.73
+   12.0 |      -0.52 |      +0.09 |       -0.36 |    -0.17 |     0.69
+   14.0 |      -0.31 |      +0.08 |       -0.20 |    -0.26 |     0.66
+  polar1s: curve flat beyond 9.0 A; raw dE at 20 A -0.24 (DFT -0.31) kcal/mol
+  polar1m: curve flat beyond 20.0 A; raw dE at 20 A -0.59 (DFT -0.31) kcal/mol
+
+Na+-CH4  [ion-induced dipole (r^-4)]  q=+1/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |      -3.31 |      -2.15 |       -2.76 |     0.65 |     0.83
+    4.0 |      -1.19 |      -0.03 |       -0.68 |     0.03 |     0.57
+    5.0 |      -0.51 |      +0.51 |       +0.17 |    -1.00 |    -0.34
+    6.0 |      -0.25 |      +0.45 |       +0.34 |    -1.78 |    -1.33
+    8.0 |      -0.08 |      +0.34 |       +0.32 |    -3.97 |    -3.77
+   10.0 |      -0.03 |      +0.21 |       +0.24 |      nan |      nan
+   12.0 |      -0.02 |      +0.13 |       +0.17 |      nan |      nan
+   14.0 |      -0.01 |      +0.08 |       +0.12 |      nan |      nan
+  polar1s: curve flat beyond 5.0 A; raw dE at 20 A -1.93 (DFT -0.00) kcal/mol
+  polar1m: curve flat beyond 6.0 A; raw dE at 20 A -0.51 (DFT -0.00) kcal/mol
+
+Na+-bz  [cation-pi + induction]  q=+1/+0
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     -24.17 |     -18.67 |      -23.17 |     0.77 |     0.96
+    4.0 |     -11.53 |      -8.37 |      -10.95 |     0.73 |     0.95
+    5.0 |      -5.61 |      -2.29 |       -4.37 |     0.41 |     0.78
+    6.0 |      -3.08 |      +0.46 |       -1.48 |    -0.15 |     0.48
+    8.0 |      -1.20 |      +0.54 |       -0.50 |    -0.45 |     0.42
+   10.0 |      -0.56 |      +0.43 |       -0.14 |    -0.76 |     0.26
+   12.0 |      -0.29 |      +0.30 |       -0.02 |    -1.06 |     0.05
+   14.0 |      -0.15 |      +0.20 |       +0.03 |    -1.35 |    -0.17
+  polar1s: curve flat beyond 20.0 A; raw dE at 20 A -5.20 (DFT -0.08) kcal/mol
+  polar1m: curve flat beyond 10.0 A; raw dE at 20 A -0.80 (DFT -0.08) kcal/mol
+
+NH4+-OAc-  [ion-ion attractive (r^-1)]  q=+1/-1
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     -76.51 |     -64.77 |      -72.41 |     0.85 |     0.95
+    4.0 |     -54.78 |     -44.67 |      -50.76 |     0.82 |     0.93
+    5.0 |     -41.56 |     -32.56 |      -38.12 |     0.78 |     0.92
+    6.0 |     -32.73 |     -24.63 |      -30.03 |     0.75 |     0.92
+    8.0 |     -21.51 |     -15.92 |      -19.70 |     0.74 |     0.92
+   10.0 |     -14.58 |     -10.77 |      -13.24 |     0.74 |     0.91
+   12.0 |      -9.84 |      -7.29 |       -8.87 |     0.74 |     0.90
+   14.0 |      -6.38 |      -4.74 |       -5.72 |     0.74 |     0.90
+  polar1s: curve flat beyond 20.0 A; raw dE at 20 A -27.99 (DFT -15.85) kcal/mol
+  polar1m: curve flat beyond 20.0 A; raw dE at 20 A -19.74 (DFT -15.85) kcal/mol
+
+NH4+-Cl-  [ion-ion attractive (r^-1)]  q=+1/-1
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     -74.74 |     -63.19 |      -71.06 |     0.85 |     0.95
+    4.0 |     -53.92 |     -43.89 |      -50.25 |     0.81 |     0.93
+    5.0 |     -40.91 |     -32.03 |      -37.83 |     0.78 |     0.92
+    6.0 |     -32.21 |     -24.28 |      -29.85 |     0.75 |     0.93
+    8.0 |     -21.22 |     -15.66 |      -19.79 |     0.74 |     0.93
+   10.0 |     -14.41 |     -10.58 |      -13.44 |     0.73 |     0.93
+   12.0 |      -9.74 |      -7.16 |       -9.08 |     0.74 |     0.93
+   14.0 |      -6.32 |      -4.65 |       -5.89 |     0.74 |     0.93
+  polar1s: curve flat beyond 20.0 A; raw dE at 20 A -27.02 (DFT -15.80) kcal/mol
+  polar1m: curve flat beyond 20.0 A; raw dE at 20 A -19.40 (DFT -15.80) kcal/mol
+
+NH4+-NH4+  [ion-ion repulsive (r^-1)]  q=+1/+1
+   gap  | DFT shifted | polar1s shifted | polar1m shifted | polar1s recov | polar1m recov
+    3.0 |     +51.05 |     +52.25 |      +51.46 |     1.02 |     1.01
+    4.0 |     +39.99 |     +41.00 |      +40.37 |     1.03 |     1.01
+    5.0 |     +32.13 |     +32.64 |      +32.47 |     1.02 |     1.01
+    6.0 |     +26.24 |     +26.34 |      +26.51 |     1.00 |     1.01
+    8.0 |     +18.00 |     +17.84 |      +18.14 |     0.99 |     1.01
+   10.0 |     +12.50 |     +12.34 |      +12.59 |     0.99 |     1.01
+   12.0 |      +8.58 |      +8.46 |       +8.63 |     0.99 |     1.01
+   14.0 |      +5.63 |      +5.55 |       +5.67 |     0.99 |     1.01
+  polar1s: curve flat beyond 20.0 A; raw dE at 20 A +14.80 (DFT +15.06) kcal/mol
+  polar1m: curve flat beyond 20.0 A; raw dE at 20 A +15.15 (DFT +15.06) kcal/mol
+
+[written to /Users/cafierom/python_mac/mace/longrange/scan/results_polar1]

@@ -65,6 +65,29 @@ for _m in _MODULES:
 for _f in _INPUTS:
     image = image.add_local_file(_DATA / _f, f"/root/data/{_f}")
 
+# PolarMACE (MACE-POLAR) needs graph_longrange + nvalchemiops, which stock
+# mace-torch does not ship and which aren't on PyPI at these versions. Copy the
+# validated installs from cafquant's venv, as cafquant's
+# dft_check/legacy_reference/modal/modal_ft_polar.py does (pins as there, plus
+# warp-lang for nvalchemiops).
+_SP = Path.home() / "python_mac" / "cafquant" / ".venv" / "lib" / "python3.12" / "site-packages"
+polar_image = (
+    modal.Image.debian_slim(python_version="3.12")
+    .pip_install("mace-torch==0.3.16", "ase==3.29.0", "e3nn==0.4.4",
+                 "numpy==2.5.1", "torch==2.8.0", "warp-lang==1.18.0")
+    # torch 2.8 + e3nn 0.4.4 constants.pt load (as cafquant's polar image)
+    .env({"TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD": "1"})
+)
+# PolarMACE data must be centroid-centred (data/omol25_spice20k_c_*): mace
+# forges a vacuum box (max|pos|+1)*5*r_cut per non-periodic frame and the polar
+# k-grid scales with its cube -- uncentred frames OOM the GPU (cafquant
+# mbe/HANDOFF.md, probe_kspace.py; omol_spice20k_polar_r6 2026-11-08).
+for _d in ("graph_longrange", "graph_longrange-0.4.0.dist-info", "nvalchemiops",
+           "nvalchemi_toolkit_ops-0.5.0.dist-info"):
+    polar_image = polar_image.add_local_dir(_SP / _d, f"/usr/local/lib/python3.12/site-packages/{_d}")
+for _m in _MODULES:
+    polar_image = polar_image.add_local_file(_CODE / _m, f"/root/code/{_m}")
+
 TRAIN_H, GATE_H, SCRATCH_H = 4 * 3600, 3600, 20 * 3600
 
 # total_charge spans -9..+9 in the OMol25 subset; offset 100 / 201 classes and
@@ -75,6 +98,20 @@ EMBEDDING_SPECS = (
     "'total_spin': {'type': 'categorical', 'per': 'graph', "
     "'num_classes': 101, 'emb_dim': 64}}")
 COMMIT_S = 300          # volume commit cadence: a killed container loses <= 5 min
+# PolarMACE electrostatics settings copied from the MACE-POLAR-1 s/m checkpoints
+# (extract_config_mace_model). Charge and spin enter through POLAR's charge
+# equilibration (data total_charge/total_spin), so no --embedding_specs.
+POLAR_ARGS = (
+    "--kspace_cutoff_factor=1.5", "--atomic_multipoles_max_l=1",
+    "--atomic_multipoles_smearing_width=1.5", "--field_feature_max_l=1",
+    "--field_feature_widths=[1.5, 3.0]", "--field_feature_norms=[20.0, 20.0, 0.5, 0.5]",
+    "--num_recursion_steps=2", "--include_electrostatic_self_interaction=True",
+    "--add_local_electron_energy=True", "--field_norm_factor=1.0",
+    "--fixedpoint_update_config={'type': 'AgnosticEmbeddedOneBodyVariableUpdate', "
+    "'potential_embedding_cls': 'AgnosticChargeBiasedLinearPotentialEmbedding', "
+    "'nonlinearity_cls': 'MLPNonLinearity'}",
+    "--field_readout_config={'type': 'OneBodyMLPFieldReadout'}",
+)
 
 
 def _scratch_files(data: str) -> list[str]:
@@ -130,12 +167,23 @@ def train(gpu: str = "A10G", epochs: int = 30, lr: float = 1e-4,
 
 
 @app.function(image=image, gpu="L4", timeout=SCRATCH_H, volumes={"/vol": vol})
-def train_scratch(r_max: float, epochs: int, name: str, data: str,
-                  lr: float = 5e-3, batch_size: int = 16, num_channels: int = 128,
-                  energy_weight: float = 1.0, forces_weight: float = 10.0,
-                  e0s: str = "average",
-                  max_L: int = 1, num_interactions: int = 2) -> str:
-    """From-scratch ScaleShiftMACE with charge/spin embeddings at a given r_max.
+def train_scratch(**kw) -> str:
+    return _train_scratch(**kw)
+
+
+@app.function(image=polar_image, gpu="L4", timeout=SCRATCH_H, volumes={"/vol": vol})
+def train_scratch_polar(**kw) -> str:
+    return _train_scratch(polar=True, **kw)
+
+
+def _train_scratch(r_max: float, epochs: int, name: str, data: str,
+                   lr: float = 5e-3, batch_size: int = 16, num_channels: int = 128,
+                   energy_weight: float = 1.0, forces_weight: float = 10.0,
+                   e0s: str = "average",
+                   max_L: int = 1, num_interactions: int = 2, polar: bool = False,
+                   seed: int = 123) -> str:
+    """From-scratch ScaleShiftMACE with charge/spin embeddings at a given r_max,
+    or (``polar``) PolarMACE with MACE-POLAR-1's electrostatics and no embeddings.
 
     Persistence: ``--work_dir`` is the run folder on the volume, so the final
     .model, logs, results and checkpoints all land there (MACE's default
@@ -161,7 +209,7 @@ def train_scratch(r_max: float, epochs: int, name: str, data: str,
     tr, va = _scratch_files(data)
     cmd = build_train_command(
         f"/vol/data/{tr}", f"/vol/data/{va}",
-        foundation_model=None, model="ScaleShiftMACE", e0s=e0s,
+        foundation_model=None, model="PolarMACE" if polar else "ScaleShiftMACE", e0s=e0s,
         name=name, results_dir=str(out), checkpoints_dir=str(out),
         max_num_epochs=epochs, lr=lr, energy_weight=energy_weight,
         forces_weight=forces_weight,
@@ -169,12 +217,28 @@ def train_scratch(r_max: float, epochs: int, name: str, data: str,
         extra=(f"--r_max={r_max}", f"--num_channels={num_channels}",
                f"--max_L={max_L}", f"--num_interactions={num_interactions}",
                "--correlation=3", "--max_ell=3",
-               "--embedding_specs", EMBEDDING_SPECS,
+               *(POLAR_ARGS if polar else ("--embedding_specs", EMBEDDING_SPECS)),
                f"--batch_size={batch_size}", f"--valid_batch_size={batch_size}",
-               "--eval_interval=1", "--restart_latest", "--amsgrad",
+               "--eval_interval=1", "--restart_latest", "--amsgrad", f"--seed={seed}",
                f"--work_dir={out}", f"--model_dir={out}",
                f"--log_dir={out}/logs"),
     )
+    if polar:
+        # PolarMACE.forward always builds a k-space grid from the cell, but for
+        # non-periodic frames (all of ours: pbc F F F) both electrostatics calls
+        # take the realspace path and never read it. mace forges a vacuum cell
+        # (max|pos|+1)*5*r_max per molecule and sizes the grid for the whole
+        # batch from the largest frame, so the unused grid alone OOMs the GPU
+        # (55 GiB request at r_max 6, 2026-11-08). Shrink it to the k=0 vector;
+        # energies and forces are unchanged. Valid ONLY for non-periodic data.
+        cmd = [sys.executable, "-c", (
+            "import sys\n"
+            "import mace.modules.extensions as ext\n"
+            "_kv = ext.compute_k_vectors_flat\n"
+            "ext.compute_k_vectors_flat = lambda cut, cell, rcell: _kv(1e-6, cell, rcell)\n"
+            "from mace.cli.run_train import main\n"
+            "sys.argv = ['mace_run_train'] + sys.argv[1:]\n"
+            "main()\n")] + cmd[1:]
     print(" ".join(cmd), flush=True)
 
     stop = threading.Event()
@@ -262,7 +326,7 @@ def scratch(r_max: float = 6.0, epochs: int = 10, name: str = None,
             data: str = "omol25_wide20k", lr: float = 5e-3,
             batch_size: int = 16, gpu: str = "L4", timeout_h: float = 2.0,
             energy_weight: float = 1.0, forces_weight: float = 10.0,
-            e0s_json: str = ""):
+            e0s_json: str = "", polar: bool = False, seed: int = 123):
     """Upload the OMol25 subset to the volume (once), then train from scratch.
 
     Launch with ``modal run --detach`` so the run survives the laptop client;
@@ -290,7 +354,8 @@ def scratch(r_max: float = 6.0, epochs: int = 10, name: str = None,
     opts = {"timeout": int(timeout_h * 3600)}
     if gpu != "L4":
         opts["gpu"] = gpu
-    print("model:", train_scratch.with_options(**opts).remote(
+    fn = train_scratch_polar if polar else train_scratch
+    print("model:", fn.with_options(**opts).remote(
         r_max=r_max, epochs=epochs, name=name, data=data, lr=lr,
         batch_size=batch_size, energy_weight=energy_weight,
-        forces_weight=forces_weight, e0s=e0s))
+        forces_weight=forces_weight, e0s=e0s, seed=seed))

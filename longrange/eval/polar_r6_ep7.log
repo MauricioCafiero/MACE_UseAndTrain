@@ -1,0 +1,83 @@
+/Users/cafierom/python_mac/cafquant/.venv/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/Users/cafierom/python_mac/cafquant/.venv/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+polar_r6_ep7: valid RMSE_E 177.4  MAE_E 50.8  median |err| 28.0 meV/atom  (n=2000)
+  worst  10 frames carry  83.8% of the squared error
+  worst  20 frames carry  86.6% of the squared error
+  worst  50 frames carry  90.7% of the squared error
+  worst 100 frames carry  93.6% of the squared error
+  worst 200 frames carry  96.0% of the squared error
+
+  by |charge|:  n | RMSE_E | MAE_E
+                0   980 |   76.6 |   46.3
+                1   912 |   88.2 |   40.8
+                2   108 |  681.3 |  177.0
+
+  by multiplicity:  n | RMSE_E | MAE_E
+                1  1921 |  178.5 |   49.3
+                2    47 |  153.5 |   82.4
+                3    31 |  144.6 |   98.6
+                4     1 |   56.3 |   56.3
+
+  by rarest-element train frames:  n | RMSE_E | MAE_E
+          100-999   303 |  419.6 |  106.0
+           >=1000  1697 |   75.2 |   41.0
+
+  by atoms:  n | RMSE_E | MAE_E
+                0   333 |  415.2 |  134.2
+               20   526 |   81.1 |   48.2
+               40  1074 |   43.5 |   28.0
+               60    67 |   27.4 |   22.6
+
+  by isolated-fragment gap (A):  n | RMSE_E | MAE_E
+       1 fragment   180 |  533.1 |  124.7
+            3-4.5   684 |   96.2 |   47.5
+            4.5-6    19 |  176.7 |  103.8
+              6-8     4 |   67.4 |   56.5
+               >8     5 |   72.7 |   69.7
+           gap <3  1108 |   66.1 |   39.9
+
+  force RMSE by isolated-fragment gap:  n | RMSE_F (meV/A) | median
+       1 fragment   180 |  11101.8 |    314.4
+           gap <3  1108 |    563.1 |    206.9
+            3-4.5   684 |    391.7 |    206.9
+            4.5-6    19 |    447.3 |    252.0
+              6-8     4 |    441.6 |    311.4
+               >8     5 |    409.0 |    404.0
+
+  worst 15 frames by force: F err meV/A | E err meV/atom | gap A | q | M | atoms | formula
+      148740 |    +6879 |  0.00 | +2 | 1 |   5 | HBF2Mg
+       14510 |     +153 |  1.24 | +1 | 1 |  53 | C8H32Na3O10
+        5420 |     -548 |  3.06 | +0 | 1 |   4 | CBrNS
+        4999 |     +182 |  0.00 | +2 | 1 |  21 | CF5K4NO7S3
+        2879 |     -631 |  3.18 | +0 | 1 |   4 | CBrNS
+        2039 |     -318 |  2.65 | +0 | 1 |  35 | C10H18LiNO4S
+        1918 |      -90 |  1.58 | -1 | 1 |  45 | C6H24B2Cl3Mg2O6S2
+        1905 |     -200 |  1.64 | +1 | 1 |  44 | H22F2NNa2O15S2
+        1895 |      -46 |  0.00 | +2 | 1 |  16 | C5H6CaO3S
+        1695 |     -222 |  2.46 | +2 | 2 |  24 | C5H11F2MgO5
+        1673 |     -413 |  2.96 | +0 | 3 |   6 | CH2BrNS
+        1672 |     +110 |  2.94 | +0 | 3 |  16 | C2H6N6O2
+        1667 |     -193 |  3.05 | +1 | 3 |  20 | C5H13ClN
+        1490 |      -16 |  2.68 | -1 | 1 |  17 | C7H6FO2S
+        1488 |      +29 |  2.72 | -1 | 1 |   8 | C2H2O3P
+
+  worst 15 frames: err meV/atom | q | M | atoms | rarest el (train frames) | formula
+      +6879 | +2 | 1 |   5 | Mg (541) | HBF2Mg
+      -1355 | +1 | 1 |   4 |  S (7134) | HN2S
+      +1091 | -1 | 1 |  31 | Mg (541) | BrF20Mg10
+       -673 | +2 | 2 |  14 | Mg (541) | H8BrMgO4
+       -631 | +0 | 1 |   4 | Br (3811) | CBrNS
+       -585 | +1 | 1 |  11 |  S (7134) | C5H4NS
+       -581 | +0 | 1 |  47 | Mg (541) | C4H32B2MgO8
+       -574 | +1 | 1 |   5 | Ca (527) | CHCaFI
+       -548 | +0 | 1 |   4 | Br (3811) | CBrNS
+       -529 | +0 | 1 |   5 | Cl (4939) | HClO2S
+       -482 | +1 | 2 |  13 | Na (572) | C4H5NaO3
+       -476 | -2 | 1 |  50 |  P (6030) | CH28O19P2
+       -433 | +0 | 1 |   4 | Na (572) | F2NaP
+       -431 | +0 | 3 |   6 |  F (5629) | H2FNOS
+       -413 | +0 | 3 |   6 | Br (3811) | CH2BrNS
