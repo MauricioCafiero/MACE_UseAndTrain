@@ -1,58 +1,45 @@
-# Protein binding sites: 6 Å vs 12 Å
+# 6 Å vs 12 Å on the protein binding sites
 
-Total, 2-body (2B) and 2-body + 3-body (2B+3B) interaction energies for the four active sites, kcal/mol. DFT is the legacy ωB97XD reference from cafquant `mbe/RESULTS.md`. Models: plain charge/spin MACE (30 epochs) and from-scratch PolarMACE, each at r_max 6 and 12 Å, trained on the same 20k OMol25 frames.
+Snapshot of cafquant `pipeline.py table` for the four long-range PoC backends (2026-11-08), with the legacy ωB97XD sums from cafquant `mbe/RESULTS.md`. All energies kcal/mol; net 3B = (2B+3B) − 2B. Backends: lr-mace6/12 = plain charge/spin MACE r_max 6/12 (30 epochs); lr-polar6/12 = from-scratch PolarMACE r_max 6 (seed 7)/12. All four trained on the same 20k OMol25 frames.
 
-## Total
-
-| System | DFT | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
+| system | method | total | 2B | 2B+3B | net 3B |
 |---|---|---|---|---|---|
-| sult | −109.5 | −100.1 | +175.7 | −90.0 | −209.1 |
-| ddc | −77.7 | −174.9 | −670.6 | −267.4 | −508.4 |
-| comt | −172.1 | −261.6 | −266.5 | −301.2 | −408.2 |
-| aldh | −50.4 | −64.6 | +233.2 | −60.5 | −174.5 |
+| sult | legacy DFT | -109.52 | -121.43 | -118.44 | 2.99 |
+| sult | lr-mace6 | -100.12 | 87.18 | -199.89 | -287.07 |
+| sult | lr-mace12 | 175.71 | -112.42 | -806.33 | -693.91 |
+| sult | lr-polar6 | -90.03 | -101.93 | 102.89 | 204.82 |
+| sult | lr-polar12 | -209.08 | -194.39 | -18.49 | 175.90 |
+| ddc | legacy DFT | -77.74 | -83.09 | -194.88 | -111.79 |
+| ddc | lr-mace6 | -174.95 | -169.97 | -973.88 | -803.91 |
+| ddc | lr-mace12 | -670.64 | -401.02 | -1132.23 | -731.21 |
+| ddc | lr-polar6 | -267.36 | -431.25 | 347.17 | 778.42 |
+| ddc | lr-polar12 | -508.41 | -584.16 | 86.72 | 670.88 |
+| comt | legacy DFT | -172.12 | -290.71 | 218.22 | 508.93 |
+| comt | lr-mace6 | -261.62 | -223.43 | 1132.57 | 1356.00 |
+| comt | lr-mace12 | -266.53 | -285.98 | -2536.14 | -2250.16 |
+| comt | lr-polar6 | -301.19 | -490.91 | 104.17 | 595.08 |
+| comt | lr-polar12 | -408.19 | -644.86 | 543.36 | 1188.22 |
+| aldh | legacy DFT | -50.38 | -51.09 | — | — |
+| aldh | lr-mace6 | -64.64 | -79.22 | -65.90 | 13.32 |
+| aldh | lr-mace12 | 233.18 | -140.85 | 246.45 | 387.30 |
+| aldh | lr-polar6 | -60.50 | -48.43 | -80.23 | -31.80 |
+| aldh | lr-polar12 | -174.49 | -154.15 | -226.98 | -72.83 |
 
-Error vs DFT (model − DFT); the smaller of each 6/12 pair in bold:
+Read:
 
-| System | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
-|---|---|---|---|---|
-| sult | **+9.4** | +285.2 | **+19.5** | −99.6 |
-| ddc | **−97.2** | −592.9 | **−189.6** | −430.7 |
-| comt | **−89.5** | −94.4 | **−129.1** | −236.1 |
-| aldh | **−14.3** | +283.6 | **−10.1** | −124.1 |
+- **Total: 6 Å is closer to DFT than 12 Å in every system, for both
+  families** (lr-mace: errors +9 / −97 / −90 / −14 at 6 Å against
+  +285 / −593 / −94 / +284 at 12 Å; lr-polar: +20 / −190 / −129 / −10
+  against −100 / −431 / −236 / −124). lr-mace12 has the wrong sign on
+  sult and aldh.
+- **2B: 6 Å closer in 6 of 8.** The exceptions are both lr-mace (sult
+  −112.42 and comt −285.98 at 12 Å, within 9 and 5 of DFT).
+- **2B+3B / net 3B** is far off for every backend; per cafquant the MBE
+  truncated at 3B does not converge for the charged systems even with DFT.
+- **Likely cause of the 12 Å failures:** training frames have ≤ 60 atoms,
+  so 12 Å neighbourhoods inside these 200–313-atom clusters are far
+  outside the training distribution (the all-neutral aldh fails too);
+  6 Å neighbourhoods are not. This is a limit of these small-molecule
+  models, not of a 12 Å cutoff in principle.
 
-## 2B
-
-| System | DFT | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
-|---|---|---|---|---|---|
-| sult | −121.4 | +87.2 | −112.4 | −101.9 | −194.4 |
-| ddc | −83.1 | −170.0 | −401.0 | −431.2 | −584.2 |
-| comt | −290.7 | −223.4 | −286.0 | −490.9 | −644.9 |
-| aldh | −51.1 | −79.2 | −140.8 | −48.4 | −154.2 |
-
-Error vs DFT (model − DFT); the smaller of each 6/12 pair in bold:
-
-| System | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
-|---|---|---|---|---|
-| sult | +208.6 | **+9.0** | **+19.5** | −73.0 |
-| ddc | **−86.9** | −317.9 | **−348.2** | −501.1 |
-| comt | +67.3 | **+4.7** | **−200.2** | −354.2 |
-| aldh | **−28.1** | −89.8 | **+2.7** | −103.1 |
-
-## 2B+3B
-
-| System | DFT | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
-|---|---|---|---|---|---|
-| sult | −118.4 | −199.9 | −806.3 | +102.9 | −18.5 |
-| ddc | −194.9 | −973.9 | −1132.2 | +347.2 | +86.7 |
-| comt | +218.2 | +1132.6 | −2536.1 | +104.2 | +543.4 |
-| aldh | — | −65.9 | +246.4 | −80.2 | −227.0 |
-
-Error vs DFT (model − DFT); the smaller of each 6/12 pair in bold:
-
-| System | MACE 6 Å | MACE 12 Å | POLAR 6 Å | POLAR 12 Å |
-|---|---|---|---|---|
-| sult | **−81.4** | −687.9 | +221.3 | **+100.0** |
-| ddc | **−779.0** | −937.4 | +542.0 | **+281.6** |
-| comt | **+914.3** | −2754.4 | **−114.0** | +325.1 |
-
-2B+3B does not converge for the charged systems even at the DFT level (cafquant `mbe/RESULTS.md`); compare it with care. Per-frame energies: `out/<system>/sp_lr-*.json`; full table for every backend: `table_all.txt`.
+Per-frame energies: `out/<system>/sp_lr-*.json`; every backend: `table_all.txt`.
