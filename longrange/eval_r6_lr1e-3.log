@@ -1,0 +1,75 @@
+/Users/cafierom/python_mac/mace/.venv/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/Users/cafierom/python_mac/mace/.venv/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+set	d_min	r6_lr1e-3	E_point	omol	uma1p2	polar1-m	gfn2
+organic	2.40	-75.14	-39.50	-56.74	-57.81	-57.97	-57.01
+organic	2.70	-74.02	-37.72	-53.29	-54.28	-54.69	-53.95
+organic	3.00	-72.99	-36.19	-50.47	-51.46	-52.01	-51.45
+organic	3.40	-72.54	-34.43	-46.77	-48.21	-49.08	-48.70
+organic	3.80	-72.29	-32.89	-43.09	-44.90	-46.63	-46.37
+organic	4.20	-72.13	-31.52	-40.59	-42.21	-44.49	-44.35
+organic	4.60	-72.12	-30.27	-36.89	-38.93	-42.58	-42.56
+organic	5.00	-72.17	-29.14	-30.77	-35.41	-40.82	-40.96
+organic	5.50	-72.21	-27.85	-17.54	-29.70	-38.82	-39.18
+organic	6.00	-72.22	-26.68	-14.00	-26.35	-37.02	-37.61
+organic	6.50	-72.22	-25.61	-14.00	-26.35	-35.41	-36.20
+organic	7.00	-72.22	-24.63	-14.00	-26.35	-33.96	-34.94
+organic	7.50	-72.22	-23.73	-14.00	-26.35	-32.66	-33.80
+organic	8.00	-72.22	-22.89	-14.00	-26.35	-31.47	-32.76
+organic	9.00	-72.22	-21.39	-14.00	-26.35	-29.38	-30.96
+organic	10.00	-72.22	-20.07	-14.00	-26.35	-27.62	-29.44
+organic	12.00	-72.22	-17.89	-14.00	-26.35	-24.78	-27.03
+organic	14.00	-72.22	-16.13	-14.00	-26.35	-22.60	-25.21
+organic	16.00	-72.22	-14.70	-14.00	-26.35	-20.87	-23.79
+organic	20.00	-72.22	-12.48	-14.00	-26.35	-18.31	-21.73
+organic	24.00	-72.22	-10.84	-14.00	-26.35	-16.51	-20.31
+mg	2.40	+78.80	-152.14	-168.00	-171.70	-170.24	
+mg	2.70	+80.85	-141.77	-163.18	-170.39	-166.57	
+mg	3.00	+82.84	-132.82	-161.26	-171.49	-163.93	
+mg	3.40	+85.42	-122.62	-159.95	-171.62	-161.40	
+mg	3.80	+87.61	-113.94	-162.03	-171.94	-159.58	
+mg	4.20	+89.10	-106.46	-168.76	-173.20	-158.23	
+mg	4.60	+89.71	-99.92	-176.50	-181.03	-157.10	
+mg	5.00	+89.81	-94.15	-157.26	-193.27	-156.08	
+mg	5.50	+89.80	-87.84	-32.95	-194.16	-154.99	
+mg	6.00	+89.80	-82.33	-2.57	-192.98	-154.09	
+mg	6.50	+89.80	-77.48	-2.57	-192.98	-153.35	
+mg	7.00	+89.80	-73.17	-2.57	-192.98	-152.74	
+mg	7.50	+89.80	-69.33	-2.57	-192.98	-152.22	
+mg	8.00	+89.80	-65.87	-2.57	-192.98	-151.79	
+mg	9.00	+89.80	-59.89	-2.57	-192.98	-151.10	
+mg	10.00	+89.80	-54.92	-2.57	-192.98	-150.60	
+mg	12.00	+89.80	-47.10	-2.57	-192.98	-149.95	
+mg	14.00	+89.80	-41.24	-2.57	-192.98	-149.58	
+mg	16.00	+89.80	-36.68	-2.57	-192.98	-149.36	
+mg	20.00	+89.80	-30.03	-2.57	-192.98	-149.14	
+mg	24.00	+89.80	-25.43	-2.57	-192.98	-149.06	
+triple	term	dft	r6_lr1e-3
+sult_072_triple_LD_alanine_histidine2	2B la	+0.09	+7.19
+sult_072_triple_LD_alanine_histidine2	2B lb	+2.48	+76.32
+sult_072_triple_LD_alanine_histidine2	2B ab	-5.42	+77.44
+sult_072_triple_LD_alanine_histidine2	delta3	-13.54	+47.68
+sult_099_triple_LD_histidine2_lysine	2B la	+2.48	+76.32
+sult_099_triple_LD_histidine2_lysine	2B lb	-33.78	+53.60
+sult_099_triple_LD_histidine2_lysine	2B ab	+30.69	+176.89
+sult_099_triple_LD_histidine2_lysine	delta3	+5.06	+51.78
+ddc_116_triple_LD_histidine1_lysine	2B la	-0.02	-25.66
+ddc_116_triple_LD_histidine1_lysine	2B lb	-126.70	-47.11
+ddc_116_triple_LD_histidine1_lysine	2B ab	-1.42	+70.10
+ddc_116_triple_LD_histidine1_lysine	delta3	+0.45	-50.09
+ddc_158_triple_LD_phenylalanine1_proline	2B la	-5.94	-47.17
+ddc_158_triple_LD_phenylalanine1_proline	2B lb	+14.77	-15.12
+ddc_158_triple_LD_phenylalanine1_proline	2B ab	-111.51	-91.44
+ddc_158_triple_LD_phenylalanine1_proline	delta3	-14.46	-0.38
+comt_210_triple_LD_lysine_magnesiumw	2B la	-134.36	-105.19
+comt_210_triple_LD_lysine_magnesiumw	2B lb	-323.00	+18.74
+comt_210_triple_LD_lysine_magnesiumw	2B ab	+127.99	+205.41
+comt_210_triple_LD_lysine_magnesiumw	delta3	+37.21	+107.52
+comt_222_triple_LD_magnesiumw_tryptophan2	2B la	-323.00	+18.74
+comt_222_triple_LD_magnesiumw_tryptophan2	2B lb	-4.29	-18.89
+comt_222_triple_LD_magnesiumw_tryptophan2	2B ab	-45.83	+186.34
+comt_222_triple_LD_magnesiumw_tryptophan2	delta3	+42.20	-91.87
+[written to /Users/cafierom/python_mac/mace/longrange/eval/r6_lr1e-3]

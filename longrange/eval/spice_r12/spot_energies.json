@@ -1,0 +1,142 @@
+{
+ "sult_072_triple_LD_alanine_histidine2": {
+  "mlip_eV": -40866.64054726889,
+  "dft_Eh": -1501.567591787039
+ },
+ "sult_014_pair_LD_alanine": {
+  "mlip_eV": -25933.340339502003,
+  "dft_Eh": -953.048103969855
+ },
+ "sult_018_pair_LD_histidine2": {
+  "mlip_eV": -34111.31683245564,
+  "dft_Eh": -1253.704878670273
+ },
+ "sult_027_pair_alanine_histidine2": {
+  "mlip_eV": -21672.01069899603,
+  "dft_Eh": -796.334498073059
+ },
+ "sult_000_monomer_LD": {
+  "mlip_eV": -19189.891184983175,
+  "dft_Eh": -705.215605114944
+ },
+ "sult_001_monomer_alanine": {
+  "mlip_eV": -6743.75743816687,
+  "dft_Eh": -247.832642208182
+ },
+ "sult_005_monomer_histidine2": {
+  "mlip_eV": -14924.42827067662,
+  "dft_Eh": -548.493225973675
+ },
+ "sult_099_triple_LD_histidine2_lysine": {
+  "mlip_eV": -47635.888203890805,
+  "dft_Eh": -1751.080254047407
+ },
+ "sult_019_pair_LD_lysine": {
+  "mlip_eV": -32724.27969000431,
+  "dft_Eh": -1202.647946186948
+ },
+ "sult_054_pair_histidine2_lysine": {
+  "mlip_eV": -28444.42233348179,
+  "dft_Eh": -1045.822834350826
+ },
+ "sult_006_monomer_lysine": {
+  "mlip_eV": -13534.783377813748,
+  "dft_Eh": -497.378510625618
+ },
+ "ddc_116_triple_LD_histidine1_lysine": {
+  "mlip_eV": -47631.90010147041,
+  "dft_Eh": -1750.40102332451
+ },
+ "ddc_018_pair_LD_histidine1": {
+  "mlip_eV": -34109.96607513424,
+  "dft_Eh": -1253.508765002393
+ },
+ "ddc_021_pair_LD_lysine": {
+  "mlip_eV": -32697.54322976595,
+  "dft_Eh": -1201.603691131067
+ },
+ "ddc_038_pair_histidine1_lysine": {
+  "mlip_eV": -28442.122873127926,
+  "dft_Eh": -1045.486815151899
+ },
+ "ddc_000_monomer_LD": {
+  "mlip_eV": -19175.92607591106,
+  "dft_Eh": -704.712979002328
+ },
+ "ddc_002_monomer_histidine1": {
+  "mlip_eV": -14932.62310351912,
+  "dft_Eh": -548.795753288731
+ },
+ "ddc_005_monomer_lysine": {
+  "mlip_eV": -13515.134910344446,
+  "dft_Eh": -496.688804312845
+ },
+ "ddc_158_triple_LD_phenylalanine1_proline": {
+  "mlip_eV": -41031.85454946863,
+  "dft_Eh": -1507.674855458447
+ },
+ "ddc_022_pair_LD_phenylalanine1": {
+  "mlip_eV": -32192.888387595794,
+  "dft_Eh": -1182.921752703155
+ },
+ "ddc_025_pair_LD_proline": {
+  "mlip_eV": -28009.912972963615,
+  "dft_Eh": -1029.265347189857
+ },
+ "ddc_080_pair_phenylalanine1_proline": {
+  "mlip_eV": -21850.688085581685,
+  "dft_Eh": -802.952914665564
+ },
+ "ddc_006_monomer_phenylalanine1": {
+  "mlip_eV": -13012.908544272015,
+  "dft_Eh": -478.199311071833
+ },
+ "ddc_009_monomer_proline": {
+  "mlip_eV": -8831.602508728522,
+  "dft_Eh": -324.575908792494
+ },
+ "comt_210_triple_LD_lysine_magnesiumw": {
+  "mlip_eV": -40220.386650011715,
+  "dft_Eh": -1478.269940625391
+ },
+ "comt_027_pair_LD_lysine": {
+  "mlip_eV": -32715.22768981088,
+  "dft_Eh": -1202.242762748283
+ },
+ "comt_028_pair_LD_magnesiumw": {
+  "mlip_eV": -26692.106809731013,
+  "dft_Eh": -980.950480746087
+ },
+ "comt_105_pair_lysine_magnesiumw": {
+  "mlip_eV": -21065.08026898573,
+  "dft_Eh": -772.940348035167
+ },
+ "comt_000_monomer_LD": {
+  "mlip_eV": -19175.495527410312,
+  "dft_Eh": -704.660049567301
+ },
+ "comt_007_monomer_lysine": {
+  "mlip_eV": -13534.664083410513,
+  "dft_Eh": -497.368602754595
+ },
+ "comt_008_monomer_magnesiumw": {
+  "mlip_eV": -7515.086652739709,
+  "dft_Eh": -275.77570410688
+ },
+ "comt_222_triple_LD_magnesiumw_tryptophan2": {
+  "mlip_eV": -45367.53306620676,
+  "dft_Eh": -1667.348786405434
+ },
+ "comt_033_pair_LD_tryptophan2": {
+  "mlip_eV": -37853.02990608033,
+  "dft_Eh": -1391.052565602508
+ },
+ "comt_117_pair_magnesiumw_tryptophan2": {
+  "mlip_eV": -26179.472340442524,
+  "dft_Eh": -962.234419361566
+ },
+ "comt_013_monomer_tryptophan2": {
+  "mlip_eV": -18676.31003298341,
+  "dft_Eh": -686.385678016832
+ }
+}

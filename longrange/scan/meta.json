@@ -1,0 +1,1277 @@
+{
+ "gaps": [
+  2.5,
+  3.0,
+  3.5,
+  4.0,
+  4.5,
+  5.0,
+  6.0,
+  7.0,
+  8.0,
+  9.0,
+  10.0,
+  11.0,
+  12.0,
+  13.0,
+  14.0,
+  16.0,
+  20.0
+ ],
+ "pairs": [
+  {
+   "label": "CH4-CH4",
+   "type": "neutral nonpolar (disp, r^-6)",
+   "A": "methane",
+   "B": "methane",
+   "qA": 0,
+   "qB": 0,
+   "monoA": "mono_methane",
+   "monoB": "mono_methane",
+   "points": [
+    {
+     "stem": "pair_CH4mCH4_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.4999993150142266,
+     "d_com": 4.096626171121774
+    },
+    {
+     "stem": "pair_CH4mCH4_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.9999992973601457,
+     "d_com": 4.609788652093816
+    },
+    {
+     "stem": "pair_CH4mCH4_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.4999999221513747,
+     "d_com": 5.11908329207246
+    },
+    {
+     "stem": "pair_CH4mCH4_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.9999997512442955,
+     "d_com": 5.626004410878256
+    },
+    {
+     "stem": "pair_CH4mCH4_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999795434836,
+     "d_com": 6.131362586688185
+    },
+    {
+     "stem": "pair_CH4mCH4_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999896134743,
+     "d_com": 6.635635295140699
+    },
+    {
+     "stem": "pair_CH4mCH4_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999968108504,
+     "d_com": 7.642024136906542
+    },
+    {
+     "stem": "pair_CH4mCH4_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999951198577,
+     "d_com": 8.646574802509459
+    },
+    {
+     "stem": "pair_CH4mCH4_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999962925703,
+     "d_com": 9.649981922519427
+    },
+    {
+     "stem": "pair_CH4mCH4_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.999999975746727,
+     "d_com": 10.652628867176094
+    },
+    {
+     "stem": "pair_CH4mCH4_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999985277231,
+     "d_com": 11.654744726572236
+    },
+    {
+     "stem": "pair_CH4mCH4_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999991707702,
+     "d_com": 12.656474877102273
+    },
+    {
+     "stem": "pair_CH4mCH4_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999995893178,
+     "d_com": 13.657916040869946
+    },
+    {
+     "stem": "pair_CH4mCH4_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999998568034,
+     "d_com": 14.659135078767168
+    },
+    {
+     "stem": "pair_CH4mCH4_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999999753964,
+     "d_com": 15.66017969321938
+    },
+    {
+     "stem": "pair_CH4mCH4_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999998425375,
+     "d_com": 17.661876697713737
+    },
+    {
+     "stem": "pair_CH4mCH4_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.9999999984122,
+     "d_com": 21.664251616114335
+    }
+   ]
+  },
+  {
+   "label": "bz-bz_stack",
+   "type": "neutral nonpolar (disp+quad)",
+   "A": "benzene",
+   "B": "benzene",
+   "qA": 0,
+   "qB": 0,
+   "monoA": "mono_benzene",
+   "monoB": "mono_benzene",
+   "points": [
+    {
+     "stem": "pair_bzmbz_stack_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.4999999709561673,
+     "d_com": 2.4804819921168497
+    },
+    {
+     "stem": "pair_bzmbz_stack_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999999890659217,
+     "d_com": 2.9837543416084653
+    },
+    {
+     "stem": "pair_bzmbz_stack_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.499999904225929,
+     "d_com": 3.48608512893438
+    },
+    {
+     "stem": "pair_bzmbz_stack_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.9999999277105602,
+     "d_com": 3.9878301353325365
+    },
+    {
+     "stem": "pair_bzmbz_stack_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999947035399,
+     "d_com": 4.489185768067525
+    },
+    {
+     "stem": "pair_bzmbz_stack_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999961141155,
+     "d_com": 4.990269383396623
+    },
+    {
+     "stem": "pair_bzmbz_stack_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999978291444,
+     "d_com": 5.991893506106599
+    },
+    {
+     "stem": "pair_bzmbz_stack_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999987139247,
+     "d_com": 6.993052767636172
+    },
+    {
+     "stem": "pair_bzmbz_stack_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.99999999195933,
+     "d_com": 7.9939218287747735
+    },
+    {
+     "stem": "pair_bzmbz_stack_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.99999999473676,
+     "d_com": 8.99459756636493
+    },
+    {
+     "stem": "pair_bzmbz_stack_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999996419085,
+     "d_com": 9.995138045393752
+    },
+    {
+     "stem": "pair_bzmbz_stack_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999997482869,
+     "d_com": 10.995580189571761
+    },
+    {
+     "stem": "pair_bzmbz_stack_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999998180797,
+     "d_com": 11.995948601909987
+    },
+    {
+     "stem": "pair_bzmbz_stack_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.99999999865346,
+     "d_com": 12.996260308681599
+    },
+    {
+     "stem": "pair_bzmbz_stack_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999998982487,
+     "d_com": 13.996527467920972
+    },
+    {
+     "stem": "pair_bzmbz_stack_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.99999999938793,
+     "d_com": 15.99696156945825
+    },
+    {
+     "stem": "pair_bzmbz_stack_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.999999999740343,
+     "d_com": 19.997569253168113
+    }
+   ]
+  },
+  {
+   "label": "H2O-H2O_aligned",
+   "type": "neutral dipolar (dip-dip, r^-3)",
+   "A": "water",
+   "B": "water",
+   "qA": 0,
+   "qB": 0,
+   "monoA": "mono_water",
+   "monoB": "mono_water",
+   "points": [
+    {
+     "stem": "pair_H2OmH2O_aligned_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.4999991217778414,
+     "d_com": 2.9772923256817485
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999999600575159,
+     "d_com": 3.4979489594084145
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.4999993597832155,
+     "d_com": 4.012438114590766
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.999999756866108,
+     "d_com": 4.5231860449924115
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999687017857,
+     "d_com": 5.03148465495507
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999919201087,
+     "d_com": 5.538090493946545
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999870826541,
+     "d_com": 6.547950730471789
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999935874597,
+     "d_com": 7.554963559608411
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999997649276,
+     "d_com": 8.560209176258505
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.999999973127618,
+     "d_com": 9.564281818756053
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.99999997263873,
+     "d_com": 10.567535937729145
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999978111141,
+     "d_com": 11.570196025436973
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999984108383,
+     "d_com": 12.572411283998152
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999989162847,
+     "d_com": 13.574284770634092
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.99999999305773,
+     "d_com": 14.575889968515341
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999998020085,
+     "d_com": 16.578497254950083
+    },
+    {
+     "stem": "pair_H2OmH2O_aligned_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.999999998605652,
+     "d_com": 20.582145349491444
+    }
+   ]
+  },
+  {
+   "label": "MeCN-MeCN_h2t",
+   "type": "neutral dipolar (dip-dip, r^-3)",
+   "A": "acetonitrile",
+   "B": "acetonitrile",
+   "qA": 0,
+   "qB": 0,
+   "monoA": "mono_acetonitrile",
+   "monoB": "mono_acetonitrile",
+   "points": [
+    {
+     "stem": "pair_MeCNmMeCN_h2t_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.499996805055395,
+     "d_com": 5.292164156738728
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999998090364736,
+     "d_com": 5.831213530514529
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.4999995914057407,
+     "d_com": 6.358163777989476
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.9999996998315,
+     "d_com": 6.877962590599581
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999482618977,
+     "d_com": 7.393156115883521
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.99999967867991,
+     "d_com": 7.905199537451151
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.99999987329859,
+     "d_com": 8.92310478237376
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999898567271,
+     "d_com": 9.93579431288213
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999920855191,
+     "d_com": 10.945265580644909
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.99999993311351,
+     "d_com": 11.952608617909497
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999985198606,
+     "d_com": 12.958470039946945
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999978597192,
+     "d_com": 13.963257979606015
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.99999997205204,
+     "d_com": 14.96724312428087
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999976286094,
+     "d_com": 15.970612062939471
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999983266619,
+     "d_com": 16.973497634355954
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999995777806,
+     "d_com": 18.97818294451162
+    },
+    {
+     "stem": "pair_MeCNmMeCN_h2t_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.99999999527766,
+     "d_com": 22.984735580168586
+    }
+   ]
+  },
+  {
+   "label": "Na+-H2O",
+   "type": "ion-dipole (r^-2)",
+   "A": "Na+",
+   "B": "water",
+   "qA": 1,
+   "qB": 0,
+   "monoA": "mono_Nap",
+   "monoB": "mono_water",
+   "points": [
+    {
+     "stem": "pair_NapmH2O_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.5,
+     "d_com": 2.8978149129249107
+    },
+    {
+     "stem": "pair_NapmH2O_03.0",
+     "target_gap": 3.0,
+     "d_min": 3.0,
+     "d_com": 3.3978149129249107
+    },
+    {
+     "stem": "pair_NapmH2O_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.5,
+     "d_com": 3.8978149129249107
+    },
+    {
+     "stem": "pair_NapmH2O_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.9999999999999996,
+     "d_com": 4.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.5,
+     "d_com": 4.89781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_05.0",
+     "target_gap": 5.0,
+     "d_min": 5.0,
+     "d_com": 5.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_06.0",
+     "target_gap": 6.0,
+     "d_min": 6.0,
+     "d_com": 6.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_07.0",
+     "target_gap": 7.0,
+     "d_min": 7.0,
+     "d_com": 7.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_08.0",
+     "target_gap": 8.0,
+     "d_min": 8.0,
+     "d_com": 8.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_09.0",
+     "target_gap": 9.0,
+     "d_min": 9.0,
+     "d_com": 9.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_10.0",
+     "target_gap": 10.0,
+     "d_min": 10.0,
+     "d_com": 10.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_11.0",
+     "target_gap": 11.0,
+     "d_min": 11.0,
+     "d_com": 11.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_12.0",
+     "target_gap": 12.0,
+     "d_min": 12.0,
+     "d_com": 12.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_13.0",
+     "target_gap": 13.0,
+     "d_min": 13.0,
+     "d_com": 13.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_14.0",
+     "target_gap": 14.0,
+     "d_min": 14.0,
+     "d_com": 14.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_16.0",
+     "target_gap": 16.0,
+     "d_min": 16.0,
+     "d_com": 16.39781491292491
+    },
+    {
+     "stem": "pair_NapmH2O_20.0",
+     "target_gap": 20.0,
+     "d_min": 20.0,
+     "d_com": 20.39781491292491
+    }
+   ]
+  },
+  {
+   "label": "Cl--H2O",
+   "type": "ion-dipole (r^-2)",
+   "A": "Cl-",
+   "B": "water",
+   "qA": -1,
+   "qB": 0,
+   "monoA": "mono_Clm",
+   "monoB": "mono_water",
+   "points": [
+    {
+     "stem": "pair_ClmmH2O_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.4999998090210664,
+     "d_com": 2.5794781344780024
+    },
+    {
+     "stem": "pair_ClmmH2O_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999999971356135,
+     "d_com": 3.1001344298878664
+    },
+    {
+     "stem": "pair_ClmmH2O_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.49999946416279,
+     "d_com": 3.614623308621033
+    },
+    {
+     "stem": "pair_ClmmH2O_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.999999643007185,
+     "d_com": 4.12537101607618
+    },
+    {
+     "stem": "pair_ClmmH2O_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999722798468,
+     "d_com": 4.633669778337123
+    },
+    {
+     "stem": "pair_ClmmH2O_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999987371937,
+     "d_com": 5.140275650001372
+    },
+    {
+     "stem": "pair_ClmmH2O_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999865091557,
+     "d_com": 6.150135811764894
+    },
+    {
+     "stem": "pair_ClmmH2O_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.99999995836877,
+     "d_com": 7.157148669312669
+    },
+    {
+     "stem": "pair_ClmmH2O_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999976051182,
+     "d_com": 8.16239424163647
+    },
+    {
+     "stem": "pair_ClmmH2O_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.999999965039393,
+     "d_com": 9.16646689771366
+    },
+    {
+     "stem": "pair_ClmmH2O_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999970880063,
+     "d_com": 10.169721023040422
+    },
+    {
+     "stem": "pair_ClmmH2O_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999979336048,
+     "d_com": 11.17238111373993
+    },
+    {
+     "stem": "pair_ClmmH2O_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999986687145,
+     "d_com": 12.174596373657236
+    },
+    {
+     "stem": "pair_ClmmH2O_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.99999999227967,
+     "d_com": 13.176469860831395
+    },
+    {
+     "stem": "pair_ClmmH2O_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999996300305,
+     "d_com": 14.17807505883784
+    },
+    {
+     "stem": "pair_ClmmH2O_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999999063204,
+     "d_com": 16.18068234306948
+    },
+    {
+     "stem": "pair_ClmmH2O_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.999999997529386,
+     "d_com": 20.184330435489475
+    }
+   ]
+  },
+  {
+   "label": "Na+-CH4",
+   "type": "ion-induced dipole (r^-4)",
+   "A": "Na+",
+   "B": "methane",
+   "qA": 1,
+   "qB": 0,
+   "monoA": "mono_Nap",
+   "monoB": "mono_methane",
+   "points": [
+    {
+     "stem": "pair_NapmCH4_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.4999978243357535,
+     "d_com": 3.0689505916885116
+    },
+    {
+     "stem": "pair_NapmCH4_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999998889969296,
+     "d_com": 3.593616365181589
+    },
+    {
+     "stem": "pair_NapmCH4_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.4999992031736618,
+     "d_com": 4.110856845854447
+    },
+    {
+     "stem": "pair_NapmCH4_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.999999682393941,
+     "d_com": 4.623618292284024
+    },
+    {
+     "stem": "pair_NapmCH4_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.49999966713818,
+     "d_com": 5.133458172667727
+    },
+    {
+     "stem": "pair_NapmCH4_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999934117071,
+     "d_com": 5.641283483502182
+    },
+    {
+     "stem": "pair_NapmCH4_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999854490663,
+     "d_com": 6.652953451482867
+    },
+    {
+     "stem": "pair_NapmCH4_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999976606831,
+     "d_com": 7.661246892415124
+    },
+    {
+     "stem": "pair_NapmCH4_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999937230667,
+     "d_com": 8.66744723752996
+    },
+    {
+     "stem": "pair_NapmCH4_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.999999955199216,
+     "d_com": 9.67225970543034
+    },
+    {
+     "stem": "pair_NapmCH4_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999978391106,
+     "d_com": 10.67610408346805
+    },
+    {
+     "stem": "pair_NapmCH4_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999996243956,
+     "d_com": 11.67924616194595
+    },
+    {
+     "stem": "pair_NapmCH4_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999993284236,
+     "d_com": 12.681862474137167
+    },
+    {
+     "stem": "pair_NapmCH4_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999989848392,
+     "d_com": 13.684074932673749
+    },
+    {
+     "stem": "pair_NapmCH4_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999989505197,
+     "d_com": 14.685970425458297
+    },
+    {
+     "stem": "pair_NapmCH4_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999991678516,
+     "d_com": 16.689048988196195
+    },
+    {
+     "stem": "pair_NapmCH4_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.999999996183035,
+     "d_com": 20.69335604968913
+    }
+   ]
+  },
+  {
+   "label": "Na+-bz",
+   "type": "cation-pi + induction",
+   "A": "Na+",
+   "B": "benzene",
+   "qA": 1,
+   "qB": 0,
+   "monoA": "mono_Nap",
+   "monoB": "mono_benzene",
+   "points": [
+    {
+     "stem": "pair_Napmbz_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.499995142152808,
+     "d_com": 2.0747134389766013
+    },
+    {
+     "stem": "pair_Napmbz_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.9999976949421896,
+     "d_com": 2.6560207176905677
+    },
+    {
+     "stem": "pair_Napmbz_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.499997731132003,
+     "d_com": 3.2100535452946706
+    },
+    {
+     "stem": "pair_Napmbz_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.999998498320647,
+     "d_com": 3.748926166434894
+    },
+    {
+     "stem": "pair_Napmbz_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.499999679354156,
+     "d_com": 4.278370753233463
+    },
+    {
+     "stem": "pair_Napmbz_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.999999783998443,
+     "d_com": 4.801505680903378
+    },
+    {
+     "stem": "pair_Napmbz_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999691297201,
+     "d_com": 5.835619488639785
+    },
+    {
+     "stem": "pair_Napmbz_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999979082989,
+     "d_com": 6.859625201806285
+    },
+    {
+     "stem": "pair_Napmbz_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.999999915730616,
+     "d_com": 7.877465109265689
+    },
+    {
+     "stem": "pair_Napmbz_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.999999868633832,
+     "d_com": 8.891257235427906
+    },
+    {
+     "stem": "pair_Napmbz_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.999999961284503,
+     "d_com": 9.90224502387237
+    },
+    {
+     "stem": "pair_Napmbz_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999927964748,
+     "d_com": 10.911207788275476
+    },
+    {
+     "stem": "pair_Napmbz_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.999999985903735,
+     "d_com": 11.918660006159532
+    },
+    {
+     "stem": "pair_Napmbz_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999967018766,
+     "d_com": 12.924954758938666
+    },
+    {
+     "stem": "pair_Napmbz_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.999999964589158,
+     "d_com": 13.930342963627226
+    },
+    {
+     "stem": "pair_Napmbz_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999995851367,
+     "d_com": 15.939085774879155
+    },
+    {
+     "stem": "pair_Napmbz_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.999999988044966,
+     "d_com": 19.951302057433573
+    }
+   ]
+  },
+  {
+   "label": "NH4+-OAc-",
+   "type": "ion-ion attractive (r^-1)",
+   "A": "ammonium",
+   "B": "acetate",
+   "qA": 1,
+   "qB": -1,
+   "monoA": "mono_ammonium",
+   "monoB": "mono_acetate",
+   "points": [
+    {
+     "stem": "pair_NH4pmOAcm_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.499996251984615,
+     "d_com": 4.666789298890694
+    },
+    {
+     "stem": "pair_NH4pmOAcm_03.0",
+     "target_gap": 3.0,
+     "d_min": 2.999998832437387,
+     "d_com": 5.217214084879933
+    },
+    {
+     "stem": "pair_NH4pmOAcm_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.499998514477251,
+     "d_com": 5.751661994496478
+    },
+    {
+     "stem": "pair_NH4pmOAcm_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.999999452029301,
+     "d_com": 6.2768253633059885
+    },
+    {
+     "stem": "pair_NH4pmOAcm_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.49999954480667,
+     "d_com": 6.796064783150795
+    },
+    {
+     "stem": "pair_NH4pmOAcm_05.0",
+     "target_gap": 5.0,
+     "d_min": 4.99999948474431,
+     "d_com": 7.311276937495949
+    },
+    {
+     "stem": "pair_NH4pmOAcm_06.0",
+     "target_gap": 6.0,
+     "d_min": 5.999999741395575,
+     "d_com": 8.33384074639394
+    },
+    {
+     "stem": "pair_NH4pmOAcm_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999809295043,
+     "d_com": 9.349799206847914
+    },
+    {
+     "stem": "pair_NH4pmOAcm_08.0",
+     "target_gap": 8.0,
+     "d_min": 7.99999996041119,
+     "d_com": 10.361695599261669
+    },
+    {
+     "stem": "pair_NH4pmOAcm_09.0",
+     "target_gap": 9.0,
+     "d_min": 8.99999991095799,
+     "d_com": 11.370911108603801
+    },
+    {
+     "stem": "pair_NH4pmOAcm_10.0",
+     "target_gap": 10.0,
+     "d_min": 9.99999997920663,
+     "d_com": 12.3782630694082
+    },
+    {
+     "stem": "pair_NH4pmOAcm_11.0",
+     "target_gap": 11.0,
+     "d_min": 10.999999967031885,
+     "d_com": 13.384266095573981
+    },
+    {
+     "stem": "pair_NH4pmOAcm_12.0",
+     "target_gap": 12.0,
+     "d_min": 11.99999996233999,
+     "d_com": 14.389261070530013
+    },
+    {
+     "stem": "pair_NH4pmOAcm_13.0",
+     "target_gap": 13.0,
+     "d_min": 12.999999973812063,
+     "d_com": 15.39348270661437
+    },
+    {
+     "stem": "pair_NH4pmOAcm_14.0",
+     "target_gap": 14.0,
+     "d_min": 13.99999998815441,
+     "d_com": 16.39709796846189
+    },
+    {
+     "stem": "pair_NH4pmOAcm_16.0",
+     "target_gap": 16.0,
+     "d_min": 15.999999991933082,
+     "d_com": 18.40296687153013
+    },
+    {
+     "stem": "pair_NH4pmOAcm_20.0",
+     "target_gap": 20.0,
+     "d_min": 19.99999999193133,
+     "d_com": 22.41117269258475
+    }
+   ]
+  },
+  {
+   "label": "NH4+-Cl-",
+   "type": "ion-ion attractive (r^-1)",
+   "A": "ammonium",
+   "B": "Cl-",
+   "qA": 1,
+   "qB": -1,
+   "monoA": "mono_ammonium",
+   "monoB": "mono_Clm",
+   "points": [
+    {
+     "stem": "pair_NH4pmClm_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.5,
+     "d_com": 3.526759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_03.0",
+     "target_gap": 3.0,
+     "d_min": 3.0,
+     "d_com": 4.026759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.5,
+     "d_com": 4.526759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_04.0",
+     "target_gap": 4.0,
+     "d_min": 3.9999999999999996,
+     "d_com": 5.026759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.5,
+     "d_com": 5.526759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_05.0",
+     "target_gap": 5.0,
+     "d_min": 5.0,
+     "d_com": 6.026759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_06.0",
+     "target_gap": 6.0,
+     "d_min": 6.0,
+     "d_com": 7.026759653074376
+    },
+    {
+     "stem": "pair_NH4pmClm_07.0",
+     "target_gap": 7.0,
+     "d_min": 6.999999999999999,
+     "d_com": 8.026759653074375
+    },
+    {
+     "stem": "pair_NH4pmClm_08.0",
+     "target_gap": 8.0,
+     "d_min": 8.0,
+     "d_com": 9.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_09.0",
+     "target_gap": 9.0,
+     "d_min": 9.0,
+     "d_com": 10.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_10.0",
+     "target_gap": 10.0,
+     "d_min": 10.0,
+     "d_com": 11.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_11.0",
+     "target_gap": 11.0,
+     "d_min": 11.0,
+     "d_com": 12.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_12.0",
+     "target_gap": 12.0,
+     "d_min": 12.0,
+     "d_com": 13.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_13.0",
+     "target_gap": 13.0,
+     "d_min": 13.0,
+     "d_com": 14.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_14.0",
+     "target_gap": 14.0,
+     "d_min": 14.0,
+     "d_com": 15.026759653074377
+    },
+    {
+     "stem": "pair_NH4pmClm_16.0",
+     "target_gap": 16.0,
+     "d_min": 16.0,
+     "d_com": 17.02675965307438
+    },
+    {
+     "stem": "pair_NH4pmClm_20.0",
+     "target_gap": 20.0,
+     "d_min": 20.0,
+     "d_com": 21.02675965307438
+    }
+   ]
+  },
+  {
+   "label": "NH4+-NH4+",
+   "type": "ion-ion repulsive (r^-1)",
+   "A": "ammonium",
+   "B": "ammonium",
+   "qA": 1,
+   "qB": 1,
+   "monoA": "mono_ammonium",
+   "monoB": "mono_ammonium",
+   "points": [
+    {
+     "stem": "pair_NH4pmNH4p_02.5",
+     "target_gap": 2.5,
+     "d_min": 2.5,
+     "d_com": 4.553519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_03.0",
+     "target_gap": 3.0,
+     "d_min": 3.0,
+     "d_com": 5.053519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_03.5",
+     "target_gap": 3.5,
+     "d_min": 3.5,
+     "d_com": 5.553519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_04.0",
+     "target_gap": 4.0,
+     "d_min": 4.0,
+     "d_com": 6.053519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_04.5",
+     "target_gap": 4.5,
+     "d_min": 4.5,
+     "d_com": 6.553519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_05.0",
+     "target_gap": 5.0,
+     "d_min": 5.0,
+     "d_com": 7.053519306148755
+    },
+    {
+     "stem": "pair_NH4pmNH4p_06.0",
+     "target_gap": 6.0,
+     "d_min": 6.0,
+     "d_com": 8.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_07.0",
+     "target_gap": 7.0,
+     "d_min": 7.0,
+     "d_com": 9.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_08.0",
+     "target_gap": 8.0,
+     "d_min": 8.0,
+     "d_com": 10.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_09.0",
+     "target_gap": 9.0,
+     "d_min": 9.0,
+     "d_com": 11.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_10.0",
+     "target_gap": 10.0,
+     "d_min": 10.0,
+     "d_com": 12.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_11.0",
+     "target_gap": 11.0,
+     "d_min": 11.0,
+     "d_com": 13.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_12.0",
+     "target_gap": 12.0,
+     "d_min": 12.0,
+     "d_com": 14.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_13.0",
+     "target_gap": 13.0,
+     "d_min": 13.0,
+     "d_com": 15.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_14.0",
+     "target_gap": 14.0,
+     "d_min": 14.0,
+     "d_com": 16.053519306148754
+    },
+    {
+     "stem": "pair_NH4pmNH4p_16.0",
+     "target_gap": 16.0,
+     "d_min": 16.0,
+     "d_com": 18.053519306148758
+    },
+    {
+     "stem": "pair_NH4pmNH4p_20.0",
+     "target_gap": 20.0,
+     "d_min": 20.0,
+     "d_com": 22.05351930614876
+    }
+   ]
+  }
+ ]
+}

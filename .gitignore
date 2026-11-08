@@ -83,3 +83,20 @@ data/*
 
 # --- MOPAC scratch (mopac_calc.py writes <label>.mop/.out/.arc here) ---
 mopac_runs/
+
+# --- longrange r_max 6 vs 12 proof of concept (2026-11-07) ---
+# ORCA: only .inp/.xyz/.out are kept (scratch files are deleted after each run)
+!longrange/**/*.xyz
+!longrange/**/*.log
+!longrange/scan/results/
+!data/omol25_spice20k_train.xyz.gz
+!data/omol25_spice20k_valid.xyz.gz
+!runs/
+runs/*
+!runs/scratch/
+runs/scratch/*
+!runs/scratch/omol_spice20k_r6/
+!runs/scratch/omol_spice20k_r12/
+runs/scratch/omol_spice20k_r*/*
+!runs/scratch/omol_spice20k_r6/omol_spice20k_r6.cpu.model
+!runs/scratch/omol_spice20k_r12/omol_spice20k_r12.cpu.model

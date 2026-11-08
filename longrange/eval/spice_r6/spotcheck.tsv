@@ -1,0 +1,25 @@
+triple	term	dft	spice_r6
+sult_072_triple_LD_alanine_histidine2	2B la	+0.09	+32.21
+sult_072_triple_LD_alanine_histidine2	2B lb	+2.48	+144.18
+sult_072_triple_LD_alanine_histidine2	2B ab	-5.42	+139.11
+sult_072_triple_LD_alanine_histidine2	delta3	-13.54	-45.13
+sult_099_triple_LD_histidine2_lysine	2B la	+2.48	+144.18
+sult_099_triple_LD_histidine2_lysine	2B lb	-33.78	+43.08
+sult_099_triple_LD_histidine2_lysine	2B ab	+30.69	+92.16
+sult_099_triple_LD_histidine2_lysine	delta3	+5.06	+39.42
+ddc_116_triple_LD_histidine1_lysine	2B la	-0.02	-16.73
+ddc_116_triple_LD_histidine1_lysine	2B lb	-126.70	-27.76
+ddc_116_triple_LD_histidine1_lysine	2B ab	-1.42	+86.08
+ddc_116_triple_LD_histidine1_lysine	delta3	+0.45	-68.25
+ddc_158_triple_LD_phenylalanine1_proline	2B la	-5.94	+13.26
+ddc_158_triple_LD_phenylalanine1_proline	2B lb	+14.77	-28.60
+ddc_158_triple_LD_phenylalanine1_proline	2B ab	-111.51	-55.26
+ddc_158_triple_LD_phenylalanine1_proline	delta3	-14.46	+32.19
+comt_210_triple_LD_lysine_magnesiumw	2B la	-134.36	-90.52
+comt_210_triple_LD_lysine_magnesiumw	2B lb	-323.00	-68.41
+comt_210_triple_LD_lysine_magnesiumw	2B ab	+127.99	-346.51
+comt_210_triple_LD_lysine_magnesiumw	delta3	+37.21	+721.07
+comt_222_triple_LD_magnesiumw_tryptophan2	2B la	-323.00	-68.41
+comt_222_triple_LD_magnesiumw_tryptophan2	2B lb	-4.29	-18.70
+comt_222_triple_LD_magnesiumw_tryptophan2	2B ab	-45.83	+206.31
+comt_222_triple_LD_magnesiumw_tryptophan2	delta3	+42.20	-117.60

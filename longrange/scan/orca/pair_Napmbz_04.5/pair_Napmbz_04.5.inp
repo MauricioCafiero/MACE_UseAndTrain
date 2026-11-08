@@ -1,0 +1,4 @@
+! wB97M-V def2-TZVPD def2/J RIJCOSX TightSCF DEFGRID3
+%maxcore 2000
+%pal nprocs 4 end
+*xyzfile 1 1 pair_Napmbz_04.5.xyz

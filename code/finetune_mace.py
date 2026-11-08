@@ -298,7 +298,7 @@ GFN2_E0S = {1: -10.707211, 6: -48.798080, 7: -70.908087, 8: -102.521807,
 def build_train_command(
     train_file: Union[str, Path],
     valid_file: Union[str, Path],
-    foundation_model: str = "off-medium",
+    foundation_model: Optional[str] = "off-medium",
     *,
     energy_key: str = "REF_energy",
     forces_key: str = "REF_forces",
@@ -340,6 +340,11 @@ def build_train_command(
       :func:`auto_e0s_from_train` (uses ``e0s_multiplicity`` / ``e0s_box_A``).
     * a ``{Z: energy}`` dict -- passed through verbatim.
 
+    ``foundation_model=None`` trains from scratch: no ``--foundation_model``
+    flag, so ``--r_max`` and the architecture flags (passed via ``extra``) take
+    effect. With a foundation model they cannot: ``mace_run_train`` overwrites
+    ``args.r_max`` with the checkpoint's own cutoff.
+
     """
     if checkpoints_dir is None:
         checkpoints_dir = results_dir
@@ -348,15 +353,16 @@ def build_train_command(
     # Resolve a mace_calc alias (e.g. "off-medium") to a cached .model path so
     # we fine-tune from an organic checkpoint. A bare path or a "medium"/"large"
     # shorthand is passed through unchanged.
-    try:
-        from mace_calc import MODEL_ALIASES
+    if foundation_model is not None:
+        try:
+            from mace_calc import MODEL_ALIASES
 
-        if str(foundation_model) in MODEL_ALIASES:
-            foundation_model = cached_model_path(str(foundation_model))
-    except Exception as e:  # pragma: no cover
-        log.warning("Could not resolve foundation_model alias %r: %s",
-                    foundation_model, e)
-    foundation_model = str(foundation_model)
+            if str(foundation_model) in MODEL_ALIASES:
+                foundation_model = cached_model_path(str(foundation_model))
+        except Exception as e:  # pragma: no cover
+            log.warning("Could not resolve foundation_model alias %r: %s",
+                        foundation_model, e)
+        foundation_model = str(foundation_model)
 
     e0s_arg: str
     if e0s == "auto":
@@ -378,9 +384,10 @@ def build_train_command(
                 "fit is degenerate and comes out chemically wrong. Prefer "
                 "e0s=GFN2_E0S (or e0s='auto').")
 
-    cmd = [
-        "mace_run_train",
-        "--foundation_model", foundation_model,
+    cmd = ["mace_run_train"]
+    if foundation_model is not None:
+        cmd += ["--foundation_model", foundation_model]
+    cmd += [
         "--train_file", str(train_file),
         "--valid_file", str(valid_file),
         "--energy_key", energy_key,
@@ -413,6 +420,7 @@ def build_train_command(
             cmd += ["--pt_valid_file", str(pt_valid_file)]
     else:
         cmd += ["--multiheads_finetuning", "False"]
+    if pt_train_file is None and foundation_model is not None:
         log.warning(
             "No pt_train_file: fine-tuning single-head, with NO replay of the "
             "foundation distribution. Expect catastrophic forgetting outside "

@@ -1,0 +1,6 @@
+! wB97M-V def2-TZVPD NoRI NoCOSX TightSCF DEFGRID3 SlowConv
+%maxcore 2000
+%scf MaxIter 500 end
+* xyz 0 4
+P 0.0 0.0 0.0
+*
